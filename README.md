@@ -1,0 +1,1 @@
+The code that is present here is the formations of a skeleton for how the game structure is going to be handled.
