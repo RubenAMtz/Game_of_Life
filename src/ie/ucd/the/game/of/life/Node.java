@@ -1,14 +1,22 @@
 package ie.ucd.the.game.of.life;
 
 public class Node {
+    // class variable
+    public static int id = 0;
+
     private String data;
     private Node first;
     private Node second;
-
+    // instance variable
+    private int ins_id;
     public Node(String data, Node first, Node second){
         this.data = data;
         this.first = first;
         this.second = second;
+        // instance variable (y)
+        this.ins_id = id;
+        // class variable (correlo)
+        id = id + 1;
     }
         
     public String getData(){
@@ -23,11 +31,15 @@ public class Node {
         return this.second;
     }
 
+    public int getId(){
+        return this.ins_id;
+    }
+
     public void setFirst(Node first){
         this.first = first;
     }
 
-    public void setLeft(Node second){
+    public void setSecond(Node second){
         this.second = second;
     }
 
@@ -53,10 +65,10 @@ NODE:
     |  data |
     |_______|
     |       |
-    | left  |------> Node
+    | first |------> Node
     |_______|
     |       |
-    | right |------> Node
+    |second |------> Node
     |_______|
     
 */
