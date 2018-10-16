@@ -82,22 +82,24 @@ public class Main {
 		players.add(p2);
 
 		Board b = new Board(players);
+		System.out.printf("Player moves forward: %d	", 100);
+		b.moveForward(25, p1);
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
-		b.nextBlock(players.get(0));
+		/*b.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
-		b.nextBlock(players.get(0));
+		//b.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
-		b.nextBlock(players.get(0));
+		//b.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
-		
+		*/
 		//b.getPath().print(b.getPath().getRoot());
 		//b.getPath().printTree(b.getPath().getRoot());
 	}
