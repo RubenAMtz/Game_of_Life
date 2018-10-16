@@ -1,12 +1,12 @@
 package ie.ucd.the.game.of.life;
 
 public class Tree {
-    private Node root;
-    private Node mainLastNode;
-    private Node secondaryLastNode;
-    private Node splitNode;
-    private boolean splitFlag;
-    private boolean joinFlag;
+    private Node root;      //first node (root)
+    private Node mainLastNode;  //tracker, 
+    private Node secondaryLastNode; //tracker,
+    private Node splitNode; // it's a node reference
+    private boolean splitFlag; // flag
+    private boolean joinFlag;  // flag
     
     // Constructor
     public Tree(String data) {
@@ -128,7 +128,56 @@ public class Tree {
                 System.out.print( node.getSecond().getId() );
             }
             
-            System.out.printf("\n\n------------\n\n");            
+            System.out.printf("\n\n------------\n\n");
+        }
+    }
+
+    public void printTree(Node node) {
+        Node mainLast = node;
+        Node secondaryLast = null;
+        Node splitNode = null;
+        boolean splitted = false;
+
+        while (mainLast != null) {
+            // print path
+            if (secondaryLast == null) {
+                System.out.printf("- ");
+                System.out.print(mainLast.getId());
+                System.out.printf("\n");
+            }
+            else if (secondaryLast != null){
+                System.out.printf("-   ");
+                System.out.print(mainLast.getId());
+                System.out.printf(" --- ");
+                System.out.print(secondaryLast.getId());
+                System.out.printf("\n");
+            }
+
+            // identify split
+            if (mainLast.getSecond() != null && splitted == false) {
+                splitted = true;
+                splitNode = mainLast;
+            }
+            
+            if (splitted) {
+                if (splitNode != null){
+                    mainLast = splitNode.getFirst();
+                    secondaryLast = splitNode.getSecond();
+                    splitNode = null;
+                }
+                else {
+                    mainLast = mainLast.getFirst();
+                    secondaryLast = secondaryLast.getFirst();
+                }
+                // if both point to the same node, means that they joined path
+                if (mainLast == secondaryLast){
+                    secondaryLast = null;
+                    splitted = false;
+                }
+            }
+            else {
+                mainLast = mainLast.getFirst();
+            }
         }
     }
 }

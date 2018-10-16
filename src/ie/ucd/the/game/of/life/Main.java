@@ -1,4 +1,5 @@
 package ie.ucd.the.game.of.life;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -57,18 +58,48 @@ public class Main {
 		// System.out.print(arbol.getRoot());
 
 		// Tree:
-		// first and secondary for PATH (not for node branches).
-		Tree t = new Tree("begin");
-		t.addNode("A", "main");
-		t.split_path();
-		t.addNode("B", "main");
-		t.addNode("C", "main");
-		t.addNode("D", "secondary"); //it knows that it should go to the split point
-		t.addNode("E", "secondary");
-		t.join_path();
-		t.addNode("end", "secondary");
+		// main and secondary for PATH (not for node branches).
+		/*
 
-		t.print(t.getRoot());
+		*/
+		// Tree t = new Tree("begin");
+		// t.addNode("A", "main");
+		// t.split_path();
+		// t.addNode("B", "main");
+		// t.addNode("C", "main");
+		// t.addNode("D", "secondary"); //it knows that it should go to the split point
+		// t.addNode("E", "secondary");
+		// t.join_path();
+		// t.addNode("end", "secondary");
+
+		// t.printTree(t.getRoot());
+
+		// Board:
+		Player p1 = new Player();
+		Player p2 = new Player();
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(p1);
+		players.add(p2);
+
+		Board b = new Board(players);
+		System.out.printf("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		b.nextBlock(players.get(0));
+		System.out.printf("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		b.nextBlock(players.get(0));
+		System.out.printf("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		b.nextBlock(players.get(0));
+		System.out.printf("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		
+		//b.getPath().print(b.getPath().getRoot());
+		//b.getPath().printTree(b.getPath().getRoot());
 	}
 
 }

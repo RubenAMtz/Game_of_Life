@@ -2,9 +2,9 @@ package ie.ucd.the.game.of.life;
 
 import java.util.*;
 
-public abstract class Player {
+public class Player {
 	// Attributes/Properties
-	private int position;
+	private Node position;
 	private int money;
 	private int children;
 	private boolean spouse;
@@ -15,10 +15,10 @@ public abstract class Player {
 	private boolean turn;
 	
 	// Setters/Getters for all attributes
-	public int getPosition() {
+	public Node getPosition() {
 		return position;
 	}
-	public void setPosition(int position) {
+	public void setPosition(Node position) {
 		this.position = position;
 	}
 	public int getChildren() {
@@ -71,14 +71,14 @@ public abstract class Player {
 	}
 	
 	// Methods Declaration, can possibly be extended for lower classes
-	public abstract void choosePawn(String pawn);
-	public abstract void choosePath(int cOrCc);
-	public abstract void chooseCareer(boolean pickOne);
-	public abstract void spin();
-	public abstract void drawCard();		// include draw action, career, house or any like such
-	public abstract void payMoney();		// to bank or player
-	public abstract void receiveMoney();	// from bank or player
-	public abstract void changePosition();	// for spinner, then turn update
-	public abstract void chooseSpinToWin();	// return number chosen
-	public abstract int getLoans();
+	// public abstract void choosePawn(String pawn);
+	// public abstract void choosePath(int cOrCc);
+	// public abstract void chooseCareer(boolean pickOne);
+	// public abstract void spin();
+	// public abstract void drawCard();		// include draw action, career, house or any like such
+	// public abstract void payMoney();		// to bank or player
+	// public abstract void receiveMoney();	// from bank or player
+	// public abstract void changePosition();	// for spinner, then turn update
+	// public abstract void chooseSpinToWin();	// return number chosen
+	// public abstract int getLoans();
 }

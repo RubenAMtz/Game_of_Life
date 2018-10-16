@@ -13,9 +13,9 @@ public class Node {
         this.data = data;
         this.first = first;
         this.second = second;
-        // instance variable (y)
+        // instance variable
         this.ins_id = id;
-        // class variable (correlo)
+        // class variable
         id = id + 1;
     }
         
