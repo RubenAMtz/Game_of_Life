@@ -140,16 +140,16 @@ public class Tree {
 
         while (mainLast != null) {
             // print path
-            if (secondaryLast == null) {
+            if (mainLast != null && secondaryLast == null) {
                 System.out.printf("- ");
-                System.out.print(mainLast.getId());
+                System.out.print(mainLast.getData());
                 System.out.printf("\n");
             }
-            else if (secondaryLast != null){
-                System.out.printf("-   ");
-                System.out.print(mainLast.getId());
-                System.out.printf(" --- ");
-                System.out.print(secondaryLast.getId());
+            else if (mainLast != null && secondaryLast != null){
+                System.out.printf(" -   ");
+                System.out.print(mainLast.getData());
+                System.out.printf(" ----------- ");
+                System.out.print(secondaryLast.getData());
                 System.out.printf("\n");
             }
 

@@ -4,12 +4,12 @@ public class Node {
     // class variable
     public static int id = 0;
 
-    private String data;
+    private Block data;
     private Node first;
     private Node second;
     // instance variable
     private int ins_id;
-    public Node(String data, Node first, Node second){
+    public Node(Block data, Node first, Node second){
         this.data = data;
         this.first = first;
         this.second = second;
@@ -19,7 +19,7 @@ public class Node {
         id = id + 1;
     }
         
-    public String getData(){
+    public Block getData(){
         return this.data;
     }
 

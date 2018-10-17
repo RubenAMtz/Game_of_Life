@@ -85,26 +85,30 @@ public class Main {
 		players.add(p3);
 		players.add(p4);
 
-		Board lifeBoard = new Board(players);
+		Game lifeBoard = new Game(players);
 		Spinner spin = new Spinner();
 		
+		// first turn
 		System.out.printf("Player%d moves forward: %d\n", p1.getpNum(), spin.getSpin());
 		lifeBoard.moveForward(spin.getSpin(), p1);
 		System.out.print("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
 		
+		// second turn
 		System.out.printf("Player%d moves forward: %d\n", p1.getpNum(), spin.getSpin());
 		lifeBoard.moveForward(spin.getSpin(), p1);
 		System.out.print("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
 		
-		System.out.printf("Player%d moves forward: %d\\n", p1.getpNum(), spin.getSpin());
+		// third turn
+		System.out.printf("Player%d moves forward: %d\n", p1.getpNum(), spin.getSpin());
 		lifeBoard.moveForward(spin.getSpin(), p1);
 		System.out.print("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
+
 		/*lifeBoard.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());

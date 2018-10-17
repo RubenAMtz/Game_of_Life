@@ -5,18 +5,18 @@ import java.util.Scanner;
 
 public class Board {
 	private Tree path;
-	private String keyboard;
-	private String blockType;
-	private ArrayList<Player> players;
-	Scanner input = new Scanner(System.in);
+	//private String keyboard;
+	//private String blockType;
+	//private ArrayList<Player> players;
+	//Scanner input = new Scanner(System.in);
 
-	public Board(ArrayList<Player> players) {
+	public Board() { // ArrayList<Player> players
 		this.path = createDefaultBoard();
-		this.players = players;
-		setInitPosition();
+		/*this.players = players;
+		setInitPosition();*/
 			
 	}	
-	
+	/*
 	public void setInitPosition() {
 		// set every player in the root node
 		Node root = this.path.getRoot();
@@ -24,16 +24,17 @@ public class Board {
 			this.players.get(i).setPosition(root);
 		}
 	}
-	
+	//Game class
 	public void moveForward(int steps, Player player) {
 		for(int x = 0; x < steps; x++)  {
 			nextBlock(player);		
 			blockLogic(player);
 		}
 	}
-	
+	//
 	//checks the type of block and takes action based on that (feeds nextBlock)
 	public void blockLogic(Player player) {
+		// String blockType = player.getPosition().getData();
 		setBlockType(player.getPosition().getData());	// "action", "payday", etc...
 		if (getBlockType() == "splitns") {
 			System.out.printf("Do you want to go for night school? (y/n)\n");
@@ -66,7 +67,7 @@ public class Board {
 			
 		}
 		else if (getBlockType() == "baby_2") {
-	
+			
 		}
 		else if (getBlockType() == "house") {
 			
@@ -81,6 +82,8 @@ public class Board {
 		Node position = player.getPosition(); //default starting position for the first case
 		Node nextNode = position.getFirst();
 		if (position.getSecond() != null) {	// if alternative path exist, give player choice
+			//check for type of block
+			//might be commented and ask the question on the "blocktype identification wrapper":
 			System.out.printf("Choose a path: (y/n)\n");
 			setKeyboard(input.next());
 			if (getKeyboard() == "n" || getKeyboard() == "N"){
@@ -93,7 +96,7 @@ public class Board {
 		}
 		player.setPosition(nextNode);
 	}
-	
+	*/
 	public Tree createDefaultBoard() {	
 		// Pay-day
 		// action
@@ -250,7 +253,7 @@ public class Board {
 		return this.path;
 	}
 
-	public String getKeyboard() {
+	/*public String getKeyboard() {
 		return keyboard;
 	}
 
@@ -264,5 +267,5 @@ public class Board {
 
 	public void setBlockType(String blockType) {
 		this.blockType = blockType;
-	}
+	}*/
 }
