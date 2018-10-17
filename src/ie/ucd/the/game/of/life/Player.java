@@ -1,9 +1,9 @@
 package ie.ucd.the.game.of.life;
 
-import java.util.*;
-
 public class Player {
 	// Attributes/Properties
+	private static int number = 0;
+	private int pNum;
 	private Node position;
 	private int money;
 	private int children;
@@ -13,6 +13,11 @@ public class Player {
 	private String career;
 	private boolean degree;
 	private boolean turn;
+	
+	public Player() {
+		number += 1;
+		setpNum(number);
+	}
 	
 	// Setters/Getters for all attributes
 	public Node getPosition() {
@@ -68,6 +73,18 @@ public class Player {
 	}
 	public void setTurn(boolean turn) {
 		this.turn = turn;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public int getpNum() {
+		return pNum;
+	}
+
+	public void setpNum(int pNum) {
+		this.pNum = pNum;
 	}
 	
 	// Methods Declaration, can possibly be extended for lower classes
