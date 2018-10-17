@@ -5,9 +5,10 @@ import java.util.Scanner;
 
 public class Board {
 	private Tree path;
+	private String keyboard;
+	private String blockType;
 	private ArrayList<Player> players;
 	Scanner input = new Scanner(System.in);
-	private String keyboard;
 
 	public Board(ArrayList<Player> players) {
 		this.path = createDefaultBoard();
@@ -15,11 +16,6 @@ public class Board {
 		setInitPosition();
 			
 	}	
-
-	//ArrayList<Player> players = new ArrayList<Player>();
-	//players.add(Player p1);		// add to list
-	//players.get(int index);		// return from list
-	//ArrayList<Cards> action = new ArrayList<Cards>();
 	
 	public void setInitPosition() {
 		// set every player in the root node
@@ -29,54 +25,75 @@ public class Board {
 		}
 	}
 	
-	// steps -> Spinner.number();
-	public void moveForward(int steps, Player player){
-			for(int x = 0; x < steps; x++)  {
-				nextBlock(player, "n");
-				Node playerPosition = player.getPosition();				
-				blockLogic(playerPosition);
-			}
+	public void moveForward(int steps, Player player) {
+		for(int x = 0; x < steps; x++)  {
+			nextBlock(player);		
+			blockLogic(player);
 		}
+	}
 	
 	//checks the type of block and takes action based on that (feeds nextBlock)
-	public void blockLogic(Node node) {
-		String blockType = node.getData();
-		if (blockType == "splitns") {
-			System.out.printf("Hitted a split on the road\n");
+	public void blockLogic(Player player) {
+		setBlockType(player.getPosition().getData());	// "action", "payday", etc...
+		if (getBlockType() == "splitns") {
 			System.out.printf("Do you want to go for night school? (y/n)\n");
-			//try {
-			this.keyboard = input.next();
-			//}
-			//finally {
-			//	System.out.println("Please enter a (y/n)!");
-			//}
-			input.close();
-		}
-		else if (blockType == "stop") {
-			System.out.printf("hitted a stop block\n");
-		}
-		else if (blockType == "payday") {
 			
 		}
-		else if (blockType == "action") {
+		else if (getBlockType() == "splitfam") {
 			
-		}				
+		}
+		else if (getBlockType() == "stop") {
+			System.out.println("\nHit a STOP block\n");
+			System.out.println(player.getPosition().getId());
+		}
+		else if (getBlockType() == "payday") {
+			System.out.println("\nHit a PAYDAY block\n");
+			System.out.println(player.getPosition().getId());
+		}
+		else if (getBlockType() == "action") {
+			
+		}
+		else if (getBlockType() == "holiday") {
+			
+		}
+		else if (getBlockType() == "spin2win") {
+			
+		}
+		else if (getBlockType() == "baby_g") {
+			
+		}
+		else if (getBlockType() == "baby_b") {
+			
+		}
+		else if (getBlockType() == "baby_2") {
+	
+		}
+		else if (getBlockType() == "house") {
+			
+		}
+		else {
+			System.out.println("Not possible");
+		}
 	}
-			
-	public void nextBlock(Player player, String where){
+	
+	public void nextBlock(Player player) {
 		// get position of player and make it move one node further
 		Node position = player.getPosition(); //default starting position for the first case
-		Node nextNode = null;
-		if (where == "n" || where == "N"){
-			nextNode = position.getFirst();												
-		}
-		else if (where == "y" || where == "Y") {
-			nextNode = position.getSecond();
+		Node nextNode = position.getFirst();
+		if (position.getSecond() != null) {	// if alternative path exist, give player choice
+			System.out.printf("Choose a path: (y/n)\n");
+			setKeyboard(input.next());
+			if (getKeyboard() == "n" || getKeyboard() == "N"){
+				nextNode = position.getFirst();												
+			}
+			else if (getKeyboard() == "y" || getKeyboard() == "Y") {
+				nextNode = position.getSecond();
+			}
+			input.close();
 		}
 		player.setPosition(nextNode);
-		
 	}
-
+	
 	public Tree createDefaultBoard() {	
 		// Pay-day
 		// action
@@ -163,7 +180,7 @@ public class Board {
 		t.addNode("action",		"main");
 		t.addNode("house",		"main");
 		t.addNode("payday",		"main");
-		t.addNode("split",		"main");
+		t.addNode("splitfam",		"main");
 		t.split_path();
 		t.addNode("action",		"main");
 		t.addNode("baby_2",		"main");//*****
@@ -231,5 +248,21 @@ public class Board {
 
 	public Tree getPath(){
 		return this.path;
+	}
+
+	public String getKeyboard() {
+		return keyboard;
+	}
+
+	public void setKeyboard(String keyboard) {
+		this.keyboard = keyboard;
+	}
+
+	public String getBlockType() {
+		return blockType;
+	}
+
+	public void setBlockType(String blockType) {
+		this.blockType = blockType;
 	}
 }

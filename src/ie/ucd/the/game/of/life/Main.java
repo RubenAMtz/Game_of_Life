@@ -77,31 +77,47 @@ public class Main {
 		// Board:
 		Player p1 = new Player();
 		Player p2 = new Player();
+		Player p3 = new Player();
+		Player p4 = new Player();
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(p1);
 		players.add(p2);
+		players.add(p3);
+		players.add(p4);
 
-		Board b = new Board(players);
-		System.out.printf("Player moves forward: %d	", 100);
-		b.moveForward(25, p1);
+		Board lifeBoard = new Board(players);
+		Spinner spin = new Spinner();
+		
+		System.out.printf("Player%d moves forward: %d\n", p1.getpNum(), spin.getSpin());
+		lifeBoard.moveForward(spin.getSpin(), p1);
+		System.out.print("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		
+		System.out.printf("Player%d moves forward: %d\n", p1.getpNum(), spin.getSpin());
+		lifeBoard.moveForward(spin.getSpin(), p1);
+		System.out.print("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		
+		System.out.printf("Player%d moves forward: %d\\n", p1.getpNum(), spin.getSpin());
+		lifeBoard.moveForward(spin.getSpin(), p1);
+		System.out.print("Player position: ");
+		System.out.print(p1.getPosition().getData());
+		System.out.printf("\n\n");
+		/*lifeBoard.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
-		/*b.nextBlock(players.get(0));
+		//lifeBoard.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
-		//b.nextBlock(players.get(0));
+		//lifeBoard.nextBlock(players.get(0));
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
-		System.out.printf("\n\n");
-		//b.nextBlock(players.get(0));
-		System.out.printf("Player position: ");
-		System.out.print(p1.getPosition().getData());
-		System.out.printf("\n\n");
-		*/
-		//b.getPath().print(b.getPath().getRoot());
-		//b.getPath().printTree(b.getPath().getRoot());
+		System.out.printf("\n\n");*/
+		//lifeBoard.getPath().print(lifeBoard.getPath().getRoot());
+		//lifeBoard.getPath().printTree(lifeBoard.getPath().getRoot());
 	}
-
 }

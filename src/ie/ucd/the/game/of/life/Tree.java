@@ -35,7 +35,7 @@ public class Tree {
         }
 
         if (this.joinFlag) {
-            // adds refernce of new node to both of the last tracked nodes (main and secondary paths)
+            // adds reference of new node to both of the last tracked nodes (main and secondary paths)
             this.mainLastNode.setFirst(newNode);
             this.secondaryLastNode.setFirst(newNode);
             this.mainLastNode = newNode;
