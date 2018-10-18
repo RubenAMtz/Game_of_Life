@@ -9,7 +9,7 @@ public class Tree {
     private boolean joinFlag;  // flag
     
     // Constructor
-    public Tree(String data) {
+    public Tree(Block data) {	// change to Block from String type
         this.root = new Node(data, null, null);
         // tracking:
         // mainLastNode is used to track last node in main path
@@ -23,7 +23,7 @@ public class Tree {
         this.splitNode = null;
     }
 
-    public void addNode(String data, String branch) {
+    public void addNode(Block data, String branch) {
         // create new node with no children
         Node newNode = new Node(data, null, null);
         

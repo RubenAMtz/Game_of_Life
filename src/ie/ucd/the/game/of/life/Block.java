@@ -1,33 +1,65 @@
 package ie.ucd.the.game.of.life;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Block {
 	
-
-	n1.addNode("action", "main")); 
+	private Block blockType;
+	//n1.addNode("action", "main")); 
 	//public Node(String data, Node first, Node second)
-	public Node(blocktype...) {
+	/*public Node(blocktype...first...second) {
 		this.block = new Block("action");
-		this.fisrt = ...
-		this.second = ....
-	}
+		this.fisrt = ...;
+		this.second = ....;
+	}*/
 
 	//The constructor of Block then:
 	public Block(String type) {// Block type
-		this.type = ConstructBlock("action"); //<----
+		this.setBlockType(constructBlock(type)); //<----
 	}
-		
-	public Block ConstructBlock(type) {
-		if type == "action"
-			this.prop = ...
-			this.prop2 = ....
-		else if type == ¿?
-			this.prop = ...
-			this.prop2 = ....
+	
+	public Block constructBlock(String type) {
+		if (type == "splitns") {
+			System.out.printf("Do you want to go for night school? (y/n)\n");
+		}
+		else if (type == "splitfam") {
+			
+		}
+		else if (type == "stop") {
+			System.out.println("\nHit a STOP block\n");
+		}
+		else if (type == "payday") {
+			System.out.println("\nHit a PAYDAY block\n");
+		}
+		else if (type == "action") {
+			
+		}
+		else if (type == "holiday") {
+			
+		}
+		else if (type == "spin2win") {
+			
+		}
+		else if (type == "baby_g") {
+			
+		}
+		else if (type == "baby_b") {
+			
+		}
+		else if (type == "baby_2") {
+			
+		}
+		else if (type == "house") {
+			
+		}
+		else {
+			System.out.println("Not possible");
+		}
+		return null;
 	}
 
-	ajam, y ademas al crear el nodo, ya estarisa asignando las propiedades, si pq tendrias
+	/*ajam, y ademas al crear el nodo, ya estarisa asignando las propiedades, si pq tendrias
 	la referencia del bloque.
 
 	y despues, puedes retrievear el block.type directamente
@@ -37,7 +69,7 @@ public class Block {
 	o si el bloque tiene pay = true, pues haces algo diferente
 	um?
 	pues es que nodo tiene referencia de bloque, pero no al reves.
-	Bloque no tiene re
+	Bloque no tiene re*/
 	// obviamente no pondrias ese nombre culero, pondrias algo descriptivo como...	
 	/*public static final ArrayList<String> BLOCK = new ArrayList<String>() {{
 	    add("action");
@@ -54,8 +86,8 @@ public class Block {
 	    add("house");
 	}};*/
 	
-	public int blockType(ArrayList<String> block);
-	public void action(Player player);
+	//public int blockType(ArrayList<String> block);
+	//public void action(Player player);
 	
 
 	public void nextBlock(Player player) {
@@ -80,8 +112,16 @@ public class Block {
 		player.setPosition(nextNode);
     }
 
+	public Block getBlockType() {
+		return blockType;
+	}
+
+	public void setBlockType(Block blockType) {
+		this.blockType = blockType;
+	}
+
 	//checks the type of block and takes action based on that (feeds nextBlock)
-	public void blockLogic(Player player) {
+	/*public void blockLogic(Player player) {
 		String blockType = player.getPosition().getData();
 		//setBlockType(player.getPosition().getData());	// "action", "payday", etc...
 		if (blockType == "splitns") {
@@ -93,11 +133,9 @@ public class Block {
 		}
 		else if (blockType() == "stop") {
 			System.out.println("\nHit a STOP block\n");
-			System.out.println(player.getPosition().getId());
 		}
 		else if (blockType == "payday") {
 			System.out.println("\nHit a PAYDAY block\n");
-			System.out.println(player.getPosition().getId());
 		}
 		else if (getBlockType() == "action") {
 			
@@ -123,10 +161,5 @@ public class Block {
 		else {
 			System.out.println("Not possible");
 		}
-	}
-
-
-
-
-
+	}*/
 }

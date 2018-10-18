@@ -18,7 +18,8 @@ public class Node {
         // class variable
         id = id + 1;
     }
-        
+    
+    // Getters
     public Block getData(){
         return this.data;
     }
@@ -34,7 +35,8 @@ public class Node {
     public int getId(){
         return this.ins_id;
     }
-
+    
+    // Setters
     public void setFirst(Node first){
         this.first = first;
     }
@@ -43,7 +45,7 @@ public class Node {
         this.second = second;
     }
 
-    public void setData(String data){
+    public void setData(Block data){
         this.data = data;
     }
 }
