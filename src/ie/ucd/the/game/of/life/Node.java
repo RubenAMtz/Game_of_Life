@@ -1,18 +1,18 @@
 package ie.ucd.the.game.of.life;
 
+import java.util.ArrayList;
+
 public class Node {
     // class variable
     public static int id = 0;
-
+    
     private Block data;
-    private Node first;
-    private Node second;
+    private ArrayList<Node> nodes;
     // instance variable
     private int ins_id;
-    public Node(Block data, Node first, Node second){
+    public Node(Block data, ArrayList<Node> nodes) {
         this.data = data;
-        this.first = first;
-        this.second = second;
+        this.nodes = nodes;
         // instance variable
         this.ins_id = id;
         // class variable
@@ -20,32 +20,24 @@ public class Node {
     }
     
     // Getters
-    public Block getData(){
+    public Block getData() {
         return this.data;
     }
 
-    public Node getFirst(){
-        return this.first;                
-    }
-        
-    public Node getSecond(){
-        return this.second;
+    public ArrayList<Node> getNodes() {
+        return this.nodes;                
     }
 
-    public int getId(){
+    public int getId() {
         return this.ins_id;
     }
     
     // Setters
-    public void setFirst(Node first){
-        this.first = first;
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = nodes;
     }
 
-    public void setSecond(Node second){
-        this.second = second;
-    }
-
-    public void setData(Block data){
+    public void setData(Block data) {
         this.data = data;
     }
 }

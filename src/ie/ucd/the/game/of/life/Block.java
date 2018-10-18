@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Block {
 	
 	private Block blockType;
+	private String blockName;
 	//n1.addNode("action", "main")); 
 	//public Node(String data, Node first, Node second)
 	/*public Node(blocktype...first...second) {
@@ -16,6 +17,7 @@ public class Block {
 
 	//The constructor of Block then:
 	public Block(String type) {// Block type
+		setBlockName(type);
 		this.setBlockType(constructBlock(type)); //<----
 	}
 	
@@ -118,6 +120,14 @@ public class Block {
 
 	public void setBlockType(Block blockType) {
 		this.blockType = blockType;
+	}
+
+	public String getBlockName() {
+		return blockName;
+	}
+
+	public void setBlockName(String blockName) {
+		this.blockName = blockName;
 	}
 
 	//checks the type of block and takes action based on that (feeds nextBlock)
