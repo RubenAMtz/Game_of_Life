@@ -100,8 +100,8 @@ public class Board {
 		t.addNode("action", "main"); //5 tracker, accmain += 1
 		t.addNode("action", "secondary"); //6 tracker, accsecondary += accmain + 1
 		t.addNode("action", "secondary"); //7 tracker, accsecondary += accmain + 1
-		t.addNode("action", "secondary");
-		t.addNode("action", "secondary");
+		//t.addNode("action", "secondary");
+		/*t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
@@ -111,12 +111,12 @@ public class Board {
 		t.addNode("stop", 	"secondary");
 		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
-		t.addNode("action", "secondary");
-		t.join_path();                   //if there is a join_path flag
+	 	t.addNode("action", "secondary");
+	*/  t.join_path();                   //if there is a join_path flag
 		t.addNode("action",		"main"); // 8 tracker, accmain = accsecondary;
 		t.addNode("payday", 	"main");
-		t.addNode("holiday", 	"main");
-		t.addNode("spin2win", 	"main");
+		//t.addNode("holiday", 	"main");
+		/*t.addNode("spin2win", 	"main");
 		t.addNode("action", 	"main");
 		t.addNode("action", 	"main");
 		t.addNode("payday", 	"main");
@@ -132,26 +132,26 @@ public class Board {
 		t.addNode("spin2win",	"main");
 		t.addNode("action",		"main");
 		t.addNode("house",		"main");
-		t.addNode("action",		"main");
-		t.addNode("splitns",		"main");
+	 	t.addNode("action",		"main");
+	*/  t.addNode("splitns",		"main");
 		t.split_path();
 		t.addNode("action",		"main");
-		t.addNode("action",		"main");
+		/*t.addNode("action",		"main");
 		t.addNode("holiday",	"main");
 		t.addNode("action",		"main");
 		t.addNode("payday",		"main");
-		t.addNode("action",		"main");
+	    t.addNode("action",		"main");
 		t.addNode("action", "secondary");
-		 t.addNode("action", "secondary");
+		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
 		t.addNode("payday", "secondary");
 		t.addNode("action", "secondary");
 		t.addNode("action", "secondary");
-		t.addNode("action", "secondary");
+		*/t.addNode("action", "secondary");
 		 t.join_path();
-		t.addNode("action",		"main");
+		/*t.addNode("action",		"main");
 		t.addNode("action",		"main");
 		t.addNode("house",		"main");
 		t.addNode("action",		"main");
@@ -224,7 +224,7 @@ public class Board {
 		t.addNode("action", 	"main");
 		t.addNode("spin2win", 	"main");
 		t.addNode("action", 	"main");
-		t.addNode("retirement", "main");
+		*/t.addNode("retirement", "main");
 		
 		return t;
 	}

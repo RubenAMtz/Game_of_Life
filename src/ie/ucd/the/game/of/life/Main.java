@@ -62,7 +62,7 @@ public class Main {
 		/*
 
 		*/
-		// Tree t = new Tree("begin");
+		//Tree t = new Tree("begin");
 		// t.addNode("A", "main");
 		// t.split_path();
 		// t.addNode("B", "main");
@@ -72,7 +72,7 @@ public class Main {
 		// t.join_path();
 		// t.addNode("end", "secondary");
 
-		// t.printTree(t.getRoot());
+		//t.printTree(t.getRoot());
 
 		// Board:
 		Player p1 = new Player();
@@ -80,9 +80,9 @@ public class Main {
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(p1);
 		players.add(p2);
-
+		
 		Board b = new Board(players);
-		System.out.printf("Player moves forward: %d	", 100);
+		/*System.out.printf("Player moves forward: %d	", 100);
 		b.moveForward(25, p1);
 		System.out.printf("Player position: ");
 		System.out.print(p1.getPosition().getData());
@@ -100,7 +100,7 @@ public class Main {
 		System.out.print(p1.getPosition().getData());
 		System.out.printf("\n\n");
 		*/
-		//b.getPath().print(b.getPath().getRoot());
+		b.getPath().print(b.getPath().getRoot());
 		//b.getPath().printTree(b.getPath().getRoot());
 	}
 
