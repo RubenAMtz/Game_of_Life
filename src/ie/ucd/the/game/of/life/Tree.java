@@ -9,7 +9,7 @@ public class Tree {
     private boolean joinFlag;  // flag
     
     // Constructor
-    public Tree(Block data) {	// change to Block from String type
+    public Tree(String data) {	// change to Block from String type
         this.root = new Node(data, null, null);
         // tracking:
         // mainLastNode is used to track last node in main path

@@ -3,25 +3,23 @@ package ie.ucd.the.game.of.life;
 import java.util.ArrayList;
 
 public class Node {
-    // class variable
-    public static int id = 0;
+
+    public static int cls_id = 0;
     
-    private Block data;
+    private Block block;
     private ArrayList<Node> nodes;
-    // instance variable
-    private int ins_id;
-    public Node(Block data, ArrayList<Node> nodes) {
-        this.data = data;
+    private int id;
+
+    public Node(String type, ArrayList<Node> nodes) {
+        this.block = new Block(type);
         this.nodes = nodes;
-        // instance variable
-        this.ins_id = id;
-        // class variable
-        id = id + 1;
+        this.id = cls_id;
+        cls_id = cls_id + 1;
     }
     
     // Getters
-    public Block getData() {
-        return this.data;
+    public Block getBlock() {
+        return this.block;
     }
 
     public ArrayList<Node> getNodes() {
@@ -29,7 +27,7 @@ public class Node {
     }
 
     public int getId() {
-        return this.ins_id;
+        return this.id;
     }
     
     // Setters
@@ -37,32 +35,23 @@ public class Node {
         this.nodes = nodes;
     }
 
-    public void setData(Block data) {
-        this.data = data;
+    public void setBlock(String type) {
+        this.block = new Block(type);
     }
 }
+/*
 
 
-/*
-n5 = new Node("finish', null, null);
-n4 = new Node('normal', n5, null);
-n3 = new Node('action', n5, null);
-n2 = new Node('normal', n3, n4);
-n1 = new Node('normal', n2, null);
-*/
-/*
+
 
 NODE:
 
     _________
     |       |
-    |  data |
+    | block | ---> block object
     |_______|
     |       |
-    | first |------> Node
-    |_______|
-    |       |
-    |second |------> Node
+    | nodes | ---> [list of children nodes]
     |_______|
     
 */

@@ -5,20 +5,10 @@ import java.util.Scanner;
 
 public class Block {
 	
-	private Block blockType;
-	private String blockName;
-	//n1.addNode("action", "main")); 
-	//public Node(String data, Node first, Node second)
-	/*public Node(blocktype...first...second) {
-		this.block = new Block("action");
-		this.fisrt = ...;
-		this.second = ....;
-	}*/
-
-	//The constructor of Block then:
-	public Block(String type) {// Block type
-		setBlockName(type);
-		this.setBlockType(constructBlock(type)); //<----
+	private String type;
+	
+	public Block(String type) {
+		this.type = type;
 	}
 	
 	public Block constructBlock(String type) {
@@ -61,37 +51,6 @@ public class Block {
 		return null;
 	}
 
-	/*ajam, y ademas al crear el nodo, ya estarisa asignando las propiedades, si pq tendrias
-	la referencia del bloque.
-
-	y despues, puedes retrievear el block.type directamente
-	Es que, cuando muevas al player un bloque adelante (nextBlock)
-	nextBlock podria regresar el bloque, ajam.
-	Y por ejemplo, el bloque podria tener una propiedad que se llame : shouldAsk = false/true
-	o si el bloque tiene pay = true, pues haces algo diferente
-	um?
-	pues es que nodo tiene referencia de bloque, pero no al reves.
-	Bloque no tiene re*/
-	// obviamente no pondrias ese nombre culero, pondrias algo descriptivo como...	
-	/*public static final ArrayList<String> BLOCK = new ArrayList<String>() {{
-	    add("action");
-	    add("payday");
-	    add("house");
-	    add("spin2win");
-	    add("babyg");
-	    add("babyb");
-	    add("baby2");
-	    add("holiday");
-	    add("stop");
-	    add("splitns");
-	    add("splitfam");
-	    add("house");
-	}};*/
-	
-	//public int blockType(ArrayList<String> block);
-	//public void action(Player player);
-	
-
 	public void nextBlock(Player player) {
 		// get position of player and make it move one node further
 		Node position = player.getPosition(); //default starting position for the first case
@@ -101,15 +60,15 @@ public class Block {
             //I think we should check for the type of block first? and then ask for the input?
             //this is so we can print whatever message
             blockLogic(player);//
-            System.out.printf("Go through secondary?: (y/n)\n");
-			setKeyboard(input.next());
-			if (getKeyboard() == "n" || getKeyboard() == "N"){
-				nextNode = position.getFirst(); //this line might be unnecessary since it is already defined										
-			}
-			else if (getKeyboard() == "y" || getKeyboard() == "Y") {
-				nextNode = position.getSecond();
-			}
-			input.close();
+            // System.out.printf("Go through secondary?: (y/n)\n");
+			// setKeyboard(input.next());
+			// if (getKeyboard() == "n" || getKeyboard() == "N"){
+			// 	nextNode = position.getFirst(); //this line might be unnecessary since it is already defined										
+			// }
+			// else if (getKeyboard() == "y" || getKeyboard() == "Y") {
+			// 	nextNode = position.getSecond();
+			// }
+			// input.close();
 		}
 		player.setPosition(nextNode);
     }
