@@ -7,6 +7,7 @@ public class Block {
 	
 	private String type;
 	
+	//cleaner version, we won't add variables or methods until they are on development.
 	public Block(String type) {
 		this.type = type;
 	}

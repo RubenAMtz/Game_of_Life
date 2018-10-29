@@ -10,6 +10,7 @@ public class Node {
     private ArrayList<Node> nodes;
     private int id;
 
+    //changes to node structure (at the bottom), we changed the variable names as well
     public Node(String type, ArrayList<Node> nodes) {
         this.block = new Block(type);
         this.nodes = nodes;
