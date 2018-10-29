@@ -8,6 +8,9 @@ public class Tree {
     private boolean splitFlag; // flag
     private boolean joinFlag;  // flag
     
+    //we haven't changed the tree class, however, it will change dramatically since we need to implement the new arraylist<Node>
+    //the logic below won't work as it won't be scalable, thinking that we theoretically could have an infinite number of branches:
+
     // Constructor
     public Tree(String data) {	// change to Block from String type
         this.root = new Node(data, null, null);
@@ -129,55 +132,6 @@ public class Tree {
             }
             
             System.out.printf("\n\n------------\n\n");
-        }
-    }
-
-    public void printTree(Node node) {
-        Node mainLast = node;
-        Node secondaryLast = null;
-        Node splitNode = null;
-        boolean splitted = false;
-
-        while (mainLast != null) {
-            // print path
-            if (mainLast != null && secondaryLast == null) {
-                System.out.printf("- ");
-                System.out.print(mainLast.getData());
-                System.out.printf("\n");
-            }
-            else if (mainLast != null && secondaryLast != null){
-                System.out.printf(" -   ");
-                System.out.print(mainLast.getData());
-                System.out.printf(" ----------- ");
-                System.out.print(secondaryLast.getData());
-                System.out.printf("\n");
-            }
-
-            // identify split
-            if (mainLast.getSecond() != null && splitted == false) {
-                splitted = true;
-                splitNode = mainLast;
-            }
-            
-            if (splitted) {
-                if (splitNode != null){
-                    mainLast = splitNode.getFirst();
-                    secondaryLast = splitNode.getSecond();
-                    splitNode = null;
-                }
-                else {
-                    mainLast = mainLast.getFirst();
-                    secondaryLast = secondaryLast.getFirst();
-                }
-                // if both point to the same node, means that they joined path
-                if (mainLast == secondaryLast){
-                    secondaryLast = null;
-                    splitted = false;
-                }
-            }
-            else {
-                mainLast = mainLast.getFirst();
-            }
         }
     }
 }

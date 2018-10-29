@@ -7,6 +7,16 @@ public class Board {
 		this.path = createDefaultBoard();
 	}	
 
+	//we are still considering ideas for the logic on how add nodes:
+	// basis of logic, an intuitive way as described below, but for as many branches as they come:
+
+	/*possible way of defining the tree?
+		t.addNodes("n1")
+		t.addNodes("n1","n2","n3")
+		t.addNodes("ny",) <- maybe n1 and n2 connect to ny.
+		t.addNodes("nx")  <- nx connects to ny and n3 ? how can we make this intuitively ?
+		*/
+
 	public Tree createDefaultBoard() {	
 		// Pay-day
 		// action
