@@ -1,74 +1,57 @@
 package ie.ucd.the.game.of.life;
 
+import java.util.ArrayList;
+
 public class Node {
-    // class variable
-    public static int id = 0;
 
-    private String data;
-    private Node first;
-    private Node second;
-    // instance variable
-    private int ins_id;
-    public Node(String data, Node first, Node second){
-        this.data = data;
-        this.first = first;
-        this.second = second;
-        // instance variable
-        this.ins_id = id;
-        // class variable
-        id = id + 1;
+    public static int cls_id = 0;
+    
+    private Block block;
+    private ArrayList<Node> nodes;
+    private int id;
+
+    public Node(String type, ArrayList<Node> nodes) {
+        this.block = new Block(type);
+        this.nodes = nodes;
+        this.id = cls_id;
+        cls_id = cls_id + 1;
     }
-        
-    public String getData(){
-        return this.data;
+    
+    // Getters
+    public Block getBlock() {
+        return this.block;
     }
 
-    public Node getFirst(){
-        return this.first;                
-    }
-        
-    public Node getSecond(){
-        return this.second;
+    public ArrayList<Node> getNodes() {
+        return this.nodes;                
     }
 
-    public int getId(){
-        return this.ins_id;
+    public int getId() {
+        return this.id;
+    }
+    
+    // Setters
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = nodes;
     }
 
-    public void setFirst(Node first){
-        this.first = first;
-    }
-
-    public void setSecond(Node second){
-        this.second = second;
-    }
-
-    public void setData(String data){
-        this.data = data;
+    public void setBlock(String type) {
+        this.block = new Block(type);
     }
 }
+/*
 
 
-/*
-n5 = new Node("finish', null, null);
-n4 = new Node('normal', n5, null);
-n3 = new Node('action', n5, null);
-n2 = new Node('normal', n3, n4);
-n1 = new Node('normal', n2, null);
-*/
-/*
+
 
 NODE:
 
     _________
     |       |
-    |  data |
+    | block | ---> block object
     |_______|
     |       |
-    | first |------> Node
-    |_______|
-    |       |
-    |second |------> Node
+    | nodes | ---> [list of children nodes]
     |_______|
     
 */

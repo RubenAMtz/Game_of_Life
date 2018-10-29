@@ -9,7 +9,7 @@ public class Tree {
     private boolean joinFlag;  // flag
     
     // Constructor
-    public Tree(String data) {
+    public Tree(String data) {	// change to Block from String type
         this.root = new Node(data, null, null);
         // tracking:
         // mainLastNode is used to track last node in main path
@@ -23,7 +23,7 @@ public class Tree {
         this.splitNode = null;
     }
 
-    public void addNode(String data, String branch) {
+    public void addNode(Block data, String branch) {
         // create new node with no children
         Node newNode = new Node(data, null, null);
         
@@ -35,7 +35,7 @@ public class Tree {
         }
 
         if (this.joinFlag) {
-            // adds refernce of new node to both of the last tracked nodes (main and secondary paths)
+            // adds reference of new node to both of the last tracked nodes (main and secondary paths)
             this.mainLastNode.setFirst(newNode);
             this.secondaryLastNode.setFirst(newNode);
             this.mainLastNode = newNode;
@@ -140,16 +140,16 @@ public class Tree {
 
         while (mainLast != null) {
             // print path
-            if (secondaryLast == null) {
+            if (mainLast != null && secondaryLast == null) {
                 System.out.printf("- ");
-                System.out.print(mainLast.getId());
+                System.out.print(mainLast.getData());
                 System.out.printf("\n");
             }
-            else if (secondaryLast != null){
-                System.out.printf("-   ");
-                System.out.print(mainLast.getId());
-                System.out.printf(" --- ");
-                System.out.print(secondaryLast.getId());
+            else if (mainLast != null && secondaryLast != null){
+                System.out.printf(" -   ");
+                System.out.print(mainLast.getData());
+                System.out.printf(" ----------- ");
+                System.out.print(secondaryLast.getData());
                 System.out.printf("\n");
             }
 
