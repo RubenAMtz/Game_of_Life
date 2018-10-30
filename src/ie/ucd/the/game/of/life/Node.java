@@ -40,11 +40,10 @@ public class Node {
         this.block = new Block(type);
     }
 }
+
+
+
 /*
-
-
-
-
 NODE:
 
     _________

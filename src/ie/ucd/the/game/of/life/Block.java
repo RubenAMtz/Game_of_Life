@@ -9,9 +9,11 @@ public class Block {
 	
 	//cleaner version, we won't add variables or methods until they are on development.
 	public Block(String type) {
-		this.type = type;
+		this.setType(type);
 	}
 	
+	// Purpose here is the assign functionality of the block based on the name of the block
+	// TODO Functionality to be implemented in each statement
 	public Block constructBlock(String type) {
 		if (type == "splitns") {
 			System.out.printf("Do you want to go for night school? (y/n)\n");
@@ -74,7 +76,7 @@ public class Block {
 		player.setPosition(nextNode);
     }
 
-	public Block getBlockType() {
+	/*public Block getBlockType() {
 		return blockType;
 	}
 
@@ -88,6 +90,14 @@ public class Block {
 
 	public void setBlockName(String blockName) {
 		this.blockName = blockName;
+	}*/
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	//checks the type of block and takes action based on that (feeds nextBlock)
