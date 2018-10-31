@@ -12,7 +12,7 @@ public class Game {
     this.players = players;
     setInitPosition();
   }
-                                                                                        
+                                                          
   public void setInitPosition() {
     // set every player in the root node
     Node root = this.board.getPath().getRoot();
@@ -21,12 +21,13 @@ public class Game {
     }
   }
   
-  public void movePlayer(int steps, Player player) {
+  // Changed the node so this needs a rework in logic
+  /*public void movePlayer(int steps, Player player) {
     for(int x = 0; x < steps; x++)  {
       toNextBlock(player);
       blockLogic(player);
     }
-  }
+  }*/
  
 
  

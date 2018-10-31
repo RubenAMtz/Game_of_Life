@@ -1,9 +1,12 @@
 package ie.ucd.the.game.of.life;
 
+import java.util.ArrayList;
+
 public class Tree {
     private Node root;      //first node (root)
-    private Node mainLastNode;  //tracker, 
-    private Node secondaryLastNode; //tracker,
+    //private Node mainLastNode;  //tracker, 
+    //private Node secondaryLastNode; //tracker,
+    private ArrayList<Node> nodes = new ArrayList<Node>(); // first can be root, others tracker
     private Node splitNode; // it's a node reference
     private boolean splitFlag; // flag
     private boolean joinFlag;  // flag
@@ -13,24 +16,32 @@ public class Tree {
 
     // Constructor
     public Tree(String data) {	// change to Block from String type
-        this.root = new Node(data, null, null);
+        this.root = new Node(data, null);
+        //this.root = new Node(data.getType(), null);
         // tracking:
         // mainLastNode is used to track last node in main path
-        this.mainLastNode = this.root;
+      //  this.mainLastNode = this.root;
         // SecondaryLastNode is used to track last node in secondary path
-        this.secondaryLastNode = null;
+      //  this.secondaryLastNode = null;
+        this.nodes.add(this.root);
+        //this.nodes.set(0, this.root);	// Creates two nodes within the tree and sets main and secondary
+        this.nodes.add(null);
+        //this.nodes.add(null);		// splitNode - TEST
 
         // split settings/variables:
         this.joinFlag = false;
         this.splitFlag = false;
         this.splitNode = null;
     }
-
-    public void addNode(Block data, String branch) {
+    // Thinking of replacing the "main/secondary" logic with integers to add as many branches as required
+    // until the join path is called. . .
+    // Also main/secondary nodes to its own ArrayList in trees
+    public void addNode(String data, int branch) {
         // create new node with no children
-        Node newNode = new Node(data, null, null);
+        Node newNode = new Node(data, null);
+        //Node newNode = new Node(data.getType(), null);
         
-        if (branch == "secondary" && this.splitFlag == false) {
+        if (branch > 0 && this.splitFlag == false) {
             // ideally this should throw an error?
             System.out.printf("\n\nNode will be added to first path (secondary is off): ");
             System.out.print(newNode);
@@ -38,18 +49,24 @@ public class Tree {
         }
 
         if (this.joinFlag) {
-            // adds reference of new node to both of the last tracked nodes (main and secondary paths)
-            this.mainLastNode.setFirst(newNode);
-            this.secondaryLastNode.setFirst(newNode);
-            this.mainLastNode = newNode;
-            // reset variables to default state
-            this.secondaryLastNode = null;
+            	// adds reference of new node to both of the last tracked nodes (main and secondary paths)
+           // this.mainLastNode.setFirst(newNode);
+           // this.secondaryLastNode.setFirst(newNode);
+            this.nodes.get(0).setNodes(0, newNode);
+            this.nodes.get(1).setNodes(1, newNode);
+            
+           // this.mainLastNode = newNode;
+            this.nodes.set(0, newNode);
+            	// reset variables to default state
+           // this.secondaryLastNode = null;
+            this.nodes.set(1, null);
+            
             this.joinFlag = false;
             this.splitNode = null;
         }            
-        else if (branch == "secondary" && this.splitFlag){
+        else if (branch > 0 && this.splitFlag){
             // if the node where it splits, has no new second node
-            if (this.splitNode.getSecond() == null) {
+            /*if (this.splitNode.getSecond() == null) {
                 this.splitNode.setSecond(newNode);
                 // tracks last node in secondary path
                 this.secondaryLastNode = newNode;
@@ -59,12 +76,26 @@ public class Tree {
                 this.secondaryLastNode.setFirst(newNode);
                 // tracks last node in secondary path
                 this.secondaryLastNode = newNode;           
+            }*/
+            if (this.splitNode.getNodes(1) == null) {
+            	this.splitNode.setNodes(1, newNode);
+            	// tracks last node in secondary path
+            	this.nodes.set(1, newNode);
+            }
+            else {
+            	// adds node to secondary path
+            	this.nodes.get(1).setNodes(0, newNode);
+            	// tracks last node in secondary path
+            	this.nodes.set(1, newNode);
             }
         }
-        else if (branch == "main"){            
-            this.mainLastNode.setFirst(newNode);
-            this.mainLastNode = newNode;
+        else if (branch == 0) {            
+         //   this.mainLastNode.setFirst(newNode);
+         //   this.mainLastNode = newNode;
+            this.nodes.get(0).setNodes(0, newNode);
+            this.nodes.set(0, newNode);
         }
+        
     }
 
     public void split_path(){
@@ -72,20 +103,25 @@ public class Tree {
         //saves the reference from previous node
         if (this.splitFlag == false) {
             this.splitFlag = true;
-            this.splitNode = this.mainLastNode;
+           // this.splitNode = this.mainLastNode;
+            this.splitNode = this.nodes.get(0);
         }
         
     }
 
     public void join_path(){
-      //unsets the flag set by split_path
+      //resets the flag set by split_path
       //connects the branches together
         if (this.splitFlag == true) {
             this.splitFlag = false;
             this.joinFlag = true;
         }      
     }
-
+    
+    public Node getRoot() {
+        return this.root;
+    }
+    
     // new tree
     // add node
     // split path
@@ -107,12 +143,32 @@ public class Tree {
                   O                 -> addNode("normal", first) %the last two has to reference
 
 */
-    public Node getRoot() {
-        return this.root;
-    }
-
     public void print(Node node) {
-        if (node != null){
+        if (node != null) {
+            // recursive calls
+            print(nodes.get(0));
+            print(nodes.get(1));
+            
+            // print data.
+            System.out.printf("Type:\n"); 
+            System.out.print(node.getTest());
+            System.out.printf(", Id: "); 
+            System.out.print(node.getId());
+            if (node.getNodes(0) != null) {
+                System.out.printf("\nFirst:\n"); 
+                System.out.print( node.getNodes(0).getId() );
+            }
+            if (node.getNodes(1) != null) {
+                System.out.printf("\nSecond:\n"); 
+                System.out.print( node.getNodes(1).getId() );
+            }
+            
+            System.out.printf("\n\n------------\n\n");
+        }
+    }
+    
+    /*public void print(Node node) {
+        if (node != null) {
             // recursive calls
             print(node.getFirst());
             print(node.getSecond());
@@ -133,5 +189,5 @@ public class Tree {
             
             System.out.printf("\n\n------------\n\n");
         }
-    }
+    }*/
 }

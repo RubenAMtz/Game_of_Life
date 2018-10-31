@@ -1,7 +1,7 @@
 package ie.ucd.the.game.of.life;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+//import java.util.ArrayList;
+//import java.util.Scanner;
 
 public class Block {
 	
@@ -54,7 +54,7 @@ public class Block {
 		return null;
 	}
 
-	public void nextBlock(Player player) {
+	/*public void nextBlock(Player player) {
 		// get position of player and make it move one node further
 		Node position = player.getPosition(); //default starting position for the first case
 		Node nextNode = position.getFirst(); 
@@ -74,7 +74,7 @@ public class Block {
 			// input.close();
 		}
 		player.setPosition(nextNode);
-    }
+    }*/
 
 	/*public Block getBlockType() {
 		return blockType;
