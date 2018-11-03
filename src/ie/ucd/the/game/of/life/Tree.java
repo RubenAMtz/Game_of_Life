@@ -16,7 +16,7 @@ public class Tree {
 
     // Constructor
     public Tree(String data) {	// change to Block from String type
-        this.root = new Node(data, null);
+        this.root = new Node(data, null, null);
         //this.root = new Node(data.getType(), null);
         // tracking:
         // mainLastNode is used to track last node in main path
@@ -39,7 +39,7 @@ public class Tree {
     // Also main/secondary nodes to its own ArrayList in trees
     public void addNode(String data, int branch) {
         // create new node with no children
-        Node newNode = new Node(data, null);
+        Node newNode = new Node(data, null, null);
         //Node newNode = new Node(data.getType(), null);
         
         if (branch > 0 && this.splitFlag == false) {

@@ -12,10 +12,11 @@ public class Node {
     private int id;
 
     //changes to node structure (at the bottom), we changed the variable names as well
-    public Node(String type, ArrayList<Node> nodes) {
+    public Node(String type, Node first, Node second) {
         this.block = new Block(type);
         this.test = type;
-        this.nodes = nodes;
+        this.nodes.add(first);
+        this.nodes.add(second);
         this.id = cls_id;
         cls_id = cls_id + 1;
     }
@@ -39,7 +40,7 @@ public class Node {
     
     // Setters
     public void setNodes(int index, Node nodes) {
-    	System.out.println(this.nodes.get(index));
+    	System.out.println(this.nodes);
         this.nodes.set(index, nodes);
     }
 
