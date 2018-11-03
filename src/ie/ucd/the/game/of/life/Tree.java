@@ -24,8 +24,9 @@ public class Tree {
         // SecondaryLastNode is used to track last node in secondary path
       //  this.secondaryLastNode = null;
         this.nodes.add(this.root);
+    	this.nodes.add(null);
+    	System.out.println(this.nodes);
         //this.nodes.set(0, this.root);	// Creates two nodes within the tree and sets main and secondary
-        this.nodes.add(null);
         //this.nodes.add(null);		// splitNode - TEST
 
         // split settings/variables:
@@ -92,6 +93,7 @@ public class Tree {
         else if (branch == 0) {            
          //   this.mainLastNode.setFirst(newNode);
          //   this.mainLastNode = newNode;
+        	System.out.println(this.nodes.get(0));
             this.nodes.get(0).setNodes(0, newNode);
             this.nodes.set(0, newNode);
         }

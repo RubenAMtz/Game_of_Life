@@ -30,6 +30,11 @@ public class Main {
 		players.add(p2);
 		players.add(p3);
 		players.add(p4);*/
+		ArrayList<Node> nodes1 = null;
+		ArrayList<Node> nodes2 = new ArrayList<Node>();
+		nodes2 = nodes1;
+		//System.out.println(nodes2);
+		
 		
 		Board board = new Board();
 		Tree tree = board.getPath();

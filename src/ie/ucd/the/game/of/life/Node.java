@@ -39,6 +39,7 @@ public class Node {
     
     // Setters
     public void setNodes(int index, Node nodes) {
+    	System.out.println(this.nodes.get(index));
         this.nodes.set(index, nodes);
     }
 
