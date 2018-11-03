@@ -6,10 +6,7 @@ public class Player {
 	private int pNum;
 	private Node position;
 	private int money;
-	private int children;
-	private boolean spouse;
 	private int loan;
-	private String color;
 	private String career;
 	private boolean degree;
 	private boolean turn;
@@ -26,35 +23,17 @@ public class Player {
 	public void setPosition(Node position) {
 		this.position = position;
 	}
-	public int getChildren() {
-		return children;
-	}
-	public void setChildren(int children) {
-		this.children = children;
-	}
 	public int getMoney() {
 		return money;
 	}
 	public void setMoney(int money) {
 		this.money = money;
 	}
-	public boolean isSpouse() {
-		return spouse;
-	}
-	public void setSpouse(boolean spouse) {
-		this.spouse = spouse;
-	}
 	public int getLoan() {
 		return loan;
 	}
 	public void setLoan(int loan) {
 		this.loan = loan;
-	}
-	public String getColor() {
-		return color;
-	}
-	public void setColor(String color) {
-		this.color = color;
 	}
 	public String getCareer() {
 		return career;

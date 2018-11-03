@@ -12,11 +12,11 @@ public class Node {
     private int id;
 
     //changes to node structure (at the bottom), we changed the variable names as well
-    public Node(String type, Node first, Node second) {
+    public Node(String type) {
         this.block = new Block(type);
         this.test = type;
-        this.nodes.add(first);
-        this.nodes.add(second);
+        this.nodes.add(null);	// first
+        this.nodes.add(null);	// second
         this.id = cls_id;
         cls_id = cls_id + 1;
     }
@@ -40,7 +40,6 @@ public class Node {
     
     // Setters
     public void setNodes(int index, Node nodes) {
-    	System.out.println(this.nodes);
         this.nodes.set(index, nodes);
     }
 
