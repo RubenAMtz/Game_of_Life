@@ -16,18 +16,16 @@ public class Node {
     public Node(String type) {
         this.block = new Block(type);
         this.type = type;
-        this.nodes.add(null);	// first
-        this.nodes.add(null);	// second
         this.id = cls_id;
         cls_id = cls_id + 1;
     }
     
-    public void addToList(int size) {
-    	while(this.nodes.size() < size)  {
+    public void addToList(int index) {
+    	while(this.nodes.size() <= index)  {
     		this.nodes.add(null);
     	}
     }
-    
+
     // Getters
     public Block getBlock() {
         return this.block;
@@ -47,6 +45,9 @@ public class Node {
     
     // Setters
     public void setNodes(int index, Node nodes) {
+        if (index >= this.nodes.size()-1){
+            this.addToList(index);
+        }
         this.nodes.set(index, nodes);
     }
 

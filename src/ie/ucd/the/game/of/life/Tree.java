@@ -16,19 +16,9 @@ public class Tree {
 
     // Constructor
     public Tree(String data) {	// change to Block from String type
-        this.root = new Node(data);
-        //this.root = new Node(data.getType(), null);
-        // tracking:
-        // mainLastNode is used to track last node in main path
-      //  this.mainLastNode = this.root;
-        // SecondaryLastNode is used to track last node in secondary path
-      //  this.secondaryLastNode = null;
-        
+        this.root = new Node(data);        
         this.tracker.add(this.root);
     	this.tracker.add(null);
-        //this.nodes.set(0, this.root);	// Creates two nodes within the tree and sets main and secondary
-        //this.nodes.add(null);		// splitNode - TEST
-
         // split settings/variables:
         this.joinFlag = false;
         this.splitFlag = false;
@@ -163,9 +153,18 @@ public class Tree {
     public void print(Node node) {
         if (node != null) {
             // recursive calls
-            print(node.getNodes(0));
+            try {
+        	print(node.getNodes(0));
+            }
+            catch(Exception IndexOutOfBoundsException) {
+            	
+            }
+            try {
             print(node.getNodes(1));
-            
+            }
+            catch(Exception IndexOutOfBoundsException) {
+            	
+            }
             try {
             	print(node.getNodes(2));
             }
@@ -181,9 +180,14 @@ public class Tree {
                 System.out.printf("\nFirst:\n"); 
                 System.out.print( node.getNodes(0).getId() );
             }
-            if (node.getNodes(1) != null) {
-                System.out.printf("\nSecond:\n"); 
-                System.out.print( node.getNodes(1).getId() );
+            try {
+	            if (node.getNodes(1) != null) {
+	                System.out.printf("\nSecond:\n"); 
+	                System.out.print( node.getNodes(1).getId() );
+	            }
+            }
+            catch(Exception IndexOutOfBoundsException) {
+            	
             }
             try {
             	if(node.getNodes(2) != null)  {
