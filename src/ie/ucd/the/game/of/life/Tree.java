@@ -165,8 +165,13 @@ public class Tree {
             // recursive calls
             print(node.getNodes(0));
             print(node.getNodes(1));
-//            print(node.getNodes(2));
             
+            try {
+            	print(node.getNodes(2));
+            }
+            catch(Exception IndexOutOfBoundsException) {
+            	
+            }
             // print data.
             System.out.printf("Type:\n"); 
             System.out.print(node.getData());
@@ -180,9 +185,14 @@ public class Tree {
                 System.out.printf("\nSecond:\n"); 
                 System.out.print( node.getNodes(1).getId() );
             }
-            if (node.getNodes(2) != null) {
-                System.out.printf("\nSecond:\n"); 
-                System.out.print( node.getNodes(2).getId() );
+            try {
+            	if(node.getNodes(2) != null)  {
+            		System.out.printf("\nThird:\n"); 
+                    System.out.print( node.getNodes(2).getId() );
+            	}
+            }
+            catch(Exception IndexOutOfBoundsException) {
+            	
             }
             
             System.out.printf("\n\n------------\n\n");

@@ -34,7 +34,7 @@ public class Board {
 			// baby stop
 			// holiday stop
 		Tree t = new Tree("start");
-		t.addNode("test", 0);
+		t.addNode("action", 0);
 		t.split_path(3);
 		t.addNode("action", 0); //5 tracker, accmain += 1
 		t.addNode("action", 1); //6 tracker, accsecondary += accmain + 1
@@ -42,7 +42,7 @@ public class Board {
 		t.addNode("action", 2);
 		t.join_path();                   //if there is a join_path flag
 		t.addNode("action",		0);
-//		t.addNode("spin2win", 	0);
+		t.addNode("spin2win", 	0);
 //		t.addNode("action", 	0);
 //		t.addNode("action", 	0);
 //		t.addNode("payday", 	0);
