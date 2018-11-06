@@ -1,58 +1,110 @@
 package ie.ucd.the.game.of.life;
 
-//import java.util.ArrayList;
-//import java.util.Scanner;
-
 public class Block {
 	
 	private String type;
-	private Block action;
-	private boolean draw_card;
-	private boolean pick_card;
-	private boolean discard_card;
-	private 
-	
-	//cleaner version, we won't add variables or methods until they are on development.
+	private Block blockAction;
+	private boolean draw_action_card;
+	private boolean draw_house_card;
+	private boolean draw_collegecarrer_card;
+	private boolean pays_bank;
+	private boolean update_pawn;
+	private boolean marriage;
+	private boolean stop;
+	private String type_of_stop;
+	private boolean payday;
+	private boolean spin2win;
+	private String baby;
+	private boolean split;
+	private boolean playerSpin;
+	private boolean retirement;
+
 	public Block(String type) {
 		setType(type);
-		this.action = constructBlock(type);
-		this.draw_card = false;
-		this.pick_either_card = false;
-		this.discard_card = false;
+
+		this.draw_action_card = false;
+		this.draw_house_card = false;
+		this.draw_collegecarrer_card = false;
+		this.pays_bank = false;
+		this.update_pawn = false;
+		this.marriage = false;
+		this.stop = false;
+		this.type_of_stop = null;
+		this.payday = false;
+		this.spin2win = false;
+		this.baby = null;
+		this.split = false;
+		this.playerSpin = false;
+		this.retirement = false;
+
+		constructBlock(type);
 	}
 	
-	public Block constructBlock(String type) {
+	public void constructBlock(String type) {
 		if (type == "splitns") {
-			System.out.printf("Do you want to go for night school? (y/n)\n");
+			// Split night school
+			this.stop = true;
+			this.type_of_stop = "Night School";
+			this.split = true;
+			this.playerSpin = true;
 		}
 		else if (type == "splitfam") {
-			
+			// Split family path
+			this.stop = true;
+			this.type_of_stop = "Family Path";
+			this.split = true;
 		}
-		else if (type == "stop") {
-			System.out.println("\nHit a STOP block\n");
+		else if (type == "graduationstop") {
+			this.stop = true;
+			this.draw_collegecarrer_card = true;
+		}
+		else if (type == "marriagestop") {
+			this.stop = true;
+			this.marriage = true;
+			this.playerSpin = true;
+		}
+		else if (type == "babystop") {
+			this.stop = true;
+
+		}
+		else if (type == "holidaystop") {
+			// Player has to stop and do nothing
+			this.stop = true;
 		}
 		else if (type == "payday") {
 			System.out.println("\nHit a PAYDAY block\n");
+			// Collect money on card if passed
+			// Collect additional 100k if landed on
+			this.payday = true;
 		}
 		else if (type == "action") {
-			this.draw_card = true;
+			this.draw_action_card = true;
+			// player keeps this action card
 		}
 		else if (type == "holiday") {
-			
+			// Do nothing special
 		}
 		else if (type == "spin2win") {
-			
+			// Player who land on block chooses 2 numbers
+			// Others players choose 1 number each
+			// Current player spins until one number comes
+			// The player who selected the number get 200k from bank
+			this.spin2win = true;
 		}
 		else if (type == "baby_g") {
 			// Update pawn with baby_girl + 1
+			this.baby = "Baby girl";
 		}
 		else if (type == "baby_b") {
 			// Update pawn with baby_boy + 1
+			this.baby = "Baby boy";
 		}
 		else if (type == "baby_2") {
-			// Update pawn with two random children
+			// Update pawn with two random children gender
+			this.baby = "2 random babies";
 		}
 		else if (type == "house") {
+			this.draw_house_card = true;
 			/* Select whether to buy or sell house first:
 			if BUY:
 				picking up the top 2 house cards
@@ -63,49 +115,14 @@ public class Block {
 				Return card to deck								
 				*/		
 		}
+		else if (type == "retirement") {
+			this.stop = true;
+		}
 		else {
+			// This should throw an error
 			System.out.println("Not possible");
 		}
-		return null;
 	}
-
-	/*public void nextBlock(Player player) {
-		// get position of player and make it move one node further
-		Node position = player.getPosition(); //default starting position for the first case
-		Node nextNode = position.getFirst(); 
-		if (position.getSecond() != null) {	// if alternative path exist, give player choice
-            //check for type of block <---------------------------
-            //I think we should check for the type of block first? and then ask for the input?
-            //this is so we can print whatever message
-            blockLogic(player);//
-            // System.out.printf("Go through secondary?: (y/n)\n");
-			// setKeyboard(input.next());
-			// if (getKeyboard() == "n" || getKeyboard() == "N"){
-			// 	nextNode = position.getFirst(); //this line might be unnecessary since it is already defined										
-			// }
-			// else if (getKeyboard() == "y" || getKeyboard() == "Y") {
-			// 	nextNode = position.getSecond();
-			// }
-			// input.close();
-		}
-		player.setPosition(nextNode);
-    }*/
-
-	/*public Block getBlockType() {
-		return blockType;
-	}
-
-	public void setBlockType(Block blockType) {
-		this.blockType = blockType;
-	}
-
-	public String getBlockName() {
-		return blockName;
-	}
-
-	public void setBlockName(String blockName) {
-		this.blockName = blockName;
-	}*/
 
 	public String getType() {
 		return type;
@@ -114,47 +131,4 @@ public class Block {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	//checks the type of block and takes action based on that (feeds nextBlock)
-	/*public void blockLogic(Player player) {
-		String blockType = player.getPosition().getData();
-		//setBlockType(player.getPosition().getData());	// "action", "payday", etc...
-		if (blockType == "splitns") {
-			System.out.printf("Do you want to go for night school? (y/n)\n");
-			
-		}
-		else if (blockType == "splitfam") {
-			
-		}
-		else if (blockType() == "stop") {
-			System.out.println("\nHit a STOP block\n");
-		}
-		else if (blockType == "payday") {
-			System.out.println("\nHit a PAYDAY block\n");
-		}
-		else if (getBlockType() == "action") {
-			
-		}
-		else if (getBlockType() == "holiday") {
-			
-		}
-		else if (getBlockType() == "spin2win") {
-			
-		}
-		else if (getBlockType() == "baby_g") {
-			
-		}
-		else if (getBlockType() == "baby_b") {
-			
-		}
-		else if (getBlockType() == "baby_2") {
-			
-		}
-		else if (getBlockType() == "house") {
-			
-		}
-		else {
-			System.out.println("Not possible");
-		}
-	}*/
 }

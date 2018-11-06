@@ -2,22 +2,22 @@ package ie.ucd.the.game.of.life;
 
 public class Pawn extends Player {
 	
-	private String color;
+	private String carColor;
 	private String gender;
 	private int children;
 	private boolean spouse;
 	
 	public Pawn(String colorChoice, String genderChoice) {
-		this.color = colorChoice;
+		this.carColor = colorChoice;
 		this.gender = genderChoice;
 	}
 	
-	public String getColor() {
-		return color;
+	public String getCarColor() {
+		return carColor;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setCarColor(String color) {
+		this.carColor = color;
 	}
 	
 	public String getGender() {
