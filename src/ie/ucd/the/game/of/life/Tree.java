@@ -4,29 +4,20 @@ import java.util.ArrayList;
 
 public class Tree {
     private Node root;      //first node (root)
-    //private Node mainLastNode;  //tracker, 
-    //private Node secondaryLastNode; //tracker,
     private ArrayList<Node> tracker = new ArrayList<Node>(); // first can be root, others tracker
     private Node splitNode; // it's a node reference
-    private boolean splitFlag; // flag
-    private boolean joinFlag;  // flag
-    
-    //we haven't changed the tree class, however, it will change dramatically since we need to implement the new arraylist<Node>
-    //the logic below won't work as it won't be scalable, thinking that we theoretically could have an infinite number of branches:
+    private boolean splitFlag;
+    private boolean joinFlag;
 
     // Constructor
-    public Tree(String data) {	// change to Block from String type
+    public Tree(String data) {	// TODO change to Block from String type
         this.root = new Node(data);        
         this.tracker.add(this.root);
-    	this.tracker.add(null);
-        // split settings/variables:
-        this.joinFlag = false;
+        
+        this.joinFlag = false; // split settings/variables:
         this.splitFlag = false;
         this.splitNode = null;
     }
-    // Thinking of replacing the "main/secondary" logic with integers to add as many branches as required
-    // until the join path is called. . .
-    // Also main/secondary nodes to its own ArrayList in trees
     
     public void setTracker(int size) {
     	while(this.tracker.size() < size)  {
@@ -37,19 +28,12 @@ public class Tree {
     public void addNode(String data, int branch) {
         // create new node with no children
         Node newNode = new Node(data);
-        //Node newNode = new Node(data.getType(), null);
         
         if (branch > 0 && this.splitFlag == false) {
-            // ideally this should throw an error?
-            System.out.printf("\n\nNode will be added to first path (secondary is off): ");
-            System.out.print(newNode);
-            System.out.printf("\n\n");
+            //throw java.lang.Exception("You have specified a different branch without splitting the branch first! :O");
         }
 
         if (this.joinFlag) {
-            	// adds reference of new node to both of the last tracked nodes (main and secondary paths)
-           // this.mainLastNode.setFirst(newNode);
-           // this.secondaryLastNode.setFirst(newNode);
         	for(int i = 0; i < this.tracker.size(); i++) {
         		this.tracker.get(i).setNodes(0, newNode);
         		if(i == 0) {
@@ -60,28 +44,10 @@ public class Tree {
         		}
         	}
             
-           // this.mainLastNode = newNode;
-            
-            	// reset variables to default state
-           // this.secondaryLastNode = null;
-            
-            
             this.joinFlag = false;
             this.splitNode = null;
         }            
-        else if (branch > 0 && this.splitFlag){
-            // if the node where it splits, has no new second node
-            /*if (this.splitNode.getSecond() == null) {
-                this.splitNode.setSecond(newNode);
-                // tracks last node in secondary path
-                this.secondaryLastNode = newNode;
-            }
-            else {
-                // adds node to secondary path
-                this.secondaryLastNode.setFirst(newNode);
-                // tracks last node in secondary path
-                this.secondaryLastNode = newNode;           
-            }*/
+        else if (branch > 0 && this.splitFlag) {
             if (this.splitNode.getNodes(branch) == null) {
             	this.splitNode.setNodes(branch, newNode);
             	// tracks last node in secondary path
@@ -94,21 +60,17 @@ public class Tree {
             	this.tracker.set(branch, newNode);
             }
         }
-        else if (branch == 0) {            
-         //   this.mainLastNode.setFirst(newNode);
-         //   this.mainLastNode = newNode;
+        else if (branch == 0) {
             this.tracker.get(branch).setNodes(branch, newNode);
             this.tracker.set(branch, newNode);
         }
         
     }
 
-    public void split_path(int paths){
-        //sets a flag
+    public void split_path(int paths) {
         //saves the reference from previous node
         if (this.splitFlag == false) {
             this.splitFlag = true;
-           // this.splitNode = this.mainLastNode;
             this.splitNode = this.tracker.get(0);
             setTracker(paths);
             this.splitNode.addToList(paths);
@@ -116,9 +78,7 @@ public class Tree {
         
     }
 
-    public void join_path(){
-      //resets the flag set by split_path
-      //connects the branches together
+    public void join_path() {
         if (this.splitFlag == true) {
             this.splitFlag = false;
             this.joinFlag = true;
@@ -152,7 +112,7 @@ public class Tree {
 */
     public void print(Node node) {
         if (node != null) {
-            // recursive calls
+            // Recursive calls
             try {
         	print(node.getNodes(0));
             }
@@ -171,7 +131,7 @@ public class Tree {
             catch(Exception IndexOutOfBoundsException) {
             	
             }
-            // print data.
+            // Print data
             System.out.printf("Type:\n"); 
             System.out.print(node.getData());
             System.out.printf(", Id: "); 
@@ -202,28 +162,4 @@ public class Tree {
             System.out.printf("\n\n------------\n\n");
         }
     }
-    
-    /*public void print(Node node) {
-        if (node != null) {
-            // recursive calls
-            print(node.getFirst());
-            print(node.getSecond());
-            
-            // print data.
-            System.out.printf("Type:\n"); 
-            System.out.print(node.getData());
-            System.out.printf(", Id: "); 
-            System.out.print(node.getId());
-            if (node.getFirst() != null){
-                System.out.printf("\nFirst:\n"); 
-                System.out.print( node.getFirst().getId() );
-            }
-            if (node.getSecond() != null) {
-                System.out.printf("\nSecond:\n"); 
-                System.out.print( node.getSecond().getId() );
-            }
-            
-            System.out.printf("\n\n------------\n\n");
-        }
-    }*/
 }

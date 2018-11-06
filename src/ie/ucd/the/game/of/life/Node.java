@@ -7,12 +7,10 @@ public class Node {
     public static int cls_id = 0;
     
     private Block block;
-    private ArrayList<Node> nodes = new ArrayList<Node>();
-//    private ArrayList<Nodes> branches;
+    private ArrayList<Node> nodes = new ArrayList<Node>();;
     private String type;
     private int id;
 
-    //changes to node structure (at the bottom), we changed the variable names as well
     public Node(String type) {
         this.block = new Block(type);
         this.type = type;
@@ -54,14 +52,6 @@ public class Node {
     public void setBlock(String type) {
         this.block = new Block(type);
     }
-    // TODO Fix the null pointer error here for the arraylist of nodes
-	/*public ArrayList<Node> getNodes() {
-		return nodes;
-	}
-
-	public void setNodes(ArrayList<Node> nodes) {
-		this.nodes = nodes;
-	}*/
 }
 
 

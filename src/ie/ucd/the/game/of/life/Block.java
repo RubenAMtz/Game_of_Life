@@ -6,14 +6,21 @@ package ie.ucd.the.game.of.life;
 public class Block {
 	
 	private String type;
+	private Block action;
+	private boolean draw_card;
+	private boolean pick_card;
+	private boolean discard_card;
+	private 
 	
 	//cleaner version, we won't add variables or methods until they are on development.
 	public Block(String type) {
-		this.setType(type);
+		setType(type);
+		this.action = constructBlock(type);
+		this.draw_card = false;
+		this.pick_either_card = false;
+		this.discard_card = false;
 	}
 	
-	// Purpose here is the assign functionality of the block based on the name of the block
-	// TODO Functionality to be implemented in each statement
 	public Block constructBlock(String type) {
 		if (type == "splitns") {
 			System.out.printf("Do you want to go for night school? (y/n)\n");
@@ -28,7 +35,7 @@ public class Block {
 			System.out.println("\nHit a PAYDAY block\n");
 		}
 		else if (type == "action") {
-			
+			this.draw_card = true;
 		}
 		else if (type == "holiday") {
 			
@@ -37,16 +44,24 @@ public class Block {
 			
 		}
 		else if (type == "baby_g") {
-			
+			// Update pawn with baby_girl + 1
 		}
 		else if (type == "baby_b") {
-			
+			// Update pawn with baby_boy + 1
 		}
 		else if (type == "baby_2") {
-			
+			// Update pawn with two random children
 		}
 		else if (type == "house") {
-			
+			/* Select whether to buy or sell house first:
+			if BUY:
+				picking up the top 2 house cards
+				Player selects favorite and pays bank amount on card
+			else SELL:
+				Player spins spinner
+				Depend on number - sell house to banker
+				Return card to deck								
+				*/		
 		}
 		else {
 			System.out.println("Not possible");
