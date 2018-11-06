@@ -8,17 +8,24 @@ public class Node {
     
     private Block block;
     private ArrayList<Node> nodes = new ArrayList<Node>();
-    private String test;
+//    private ArrayList<Nodes> branches;
+    private String type;
     private int id;
 
     //changes to node structure (at the bottom), we changed the variable names as well
     public Node(String type) {
         this.block = new Block(type);
-        this.test = type;
+        this.type = type;
         this.nodes.add(null);	// first
         this.nodes.add(null);	// second
         this.id = cls_id;
         cls_id = cls_id + 1;
+    }
+    
+    public void addToList(int size) {
+    	while(this.nodes.size() < size)  {
+    		this.nodes.add(null);
+    	}
     }
     
     // Getters
@@ -34,8 +41,8 @@ public class Node {
         return this.id;
     }
     
-    public String getTest() {
-		return test;
+    public String getData() {
+		return type;
 	}
     
     // Setters

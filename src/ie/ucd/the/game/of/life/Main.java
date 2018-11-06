@@ -39,6 +39,7 @@ public class Main {
 		
 		Board board = new Board();
 		Tree tree = board.getPath();
+		tree.print(tree.getRoot());
 		
 		//Game lifeBoard = new Game(players);
 		//Spinner spin = new Spinner();

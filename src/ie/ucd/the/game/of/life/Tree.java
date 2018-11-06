@@ -6,7 +6,7 @@ public class Tree {
     private Node root;      //first node (root)
     //private Node mainLastNode;  //tracker, 
     //private Node secondaryLastNode; //tracker,
-    private ArrayList<Node> nodes = new ArrayList<Node>(); // first can be root, others tracker
+    private ArrayList<Node> tracker = new ArrayList<Node>(); // first can be root, others tracker
     private Node splitNode; // it's a node reference
     private boolean splitFlag; // flag
     private boolean joinFlag;  // flag
@@ -23,8 +23,9 @@ public class Tree {
       //  this.mainLastNode = this.root;
         // SecondaryLastNode is used to track last node in secondary path
       //  this.secondaryLastNode = null;
-        this.nodes.add(this.root);
-    	this.nodes.add(null);
+        
+        this.tracker.add(this.root);
+    	this.tracker.add(null);
         //this.nodes.set(0, this.root);	// Creates two nodes within the tree and sets main and secondary
         //this.nodes.add(null);		// splitNode - TEST
 
@@ -36,6 +37,13 @@ public class Tree {
     // Thinking of replacing the "main/secondary" logic with integers to add as many branches as required
     // until the join path is called. . .
     // Also main/secondary nodes to its own ArrayList in trees
+    
+    public void setTracker(int size) {
+    	while(this.tracker.size() < size)  {
+    		this.tracker.add(null);
+    	}
+    }
+    
     public void addNode(String data, int branch) {
         // create new node with no children
         Node newNode = new Node(data);
@@ -52,14 +60,21 @@ public class Tree {
             	// adds reference of new node to both of the last tracked nodes (main and secondary paths)
            // this.mainLastNode.setFirst(newNode);
            // this.secondaryLastNode.setFirst(newNode);
-            this.nodes.get(0).setNodes(0, newNode);
-            this.nodes.get(1).setNodes(1, newNode);
+        	for(int i = 0; i < this.tracker.size(); i++) {
+        		this.tracker.get(i).setNodes(0, newNode);
+        		if(i == 0) {
+        			this.tracker.set(i, newNode);
+        		}
+        		else {
+        			this.tracker.set(i, null);
+        		}
+        	}
             
            // this.mainLastNode = newNode;
-            this.nodes.set(0, newNode);
+            
             	// reset variables to default state
            // this.secondaryLastNode = null;
-            this.nodes.set(1, null);
+            
             
             this.joinFlag = false;
             this.splitNode = null;
@@ -77,34 +92,36 @@ public class Tree {
                 // tracks last node in secondary path
                 this.secondaryLastNode = newNode;           
             }*/
-            if (this.splitNode.getNodes(1) == null) {
-            	this.splitNode.setNodes(1, newNode);
+            if (this.splitNode.getNodes(branch) == null) {
+            	this.splitNode.setNodes(branch, newNode);
             	// tracks last node in secondary path
-            	this.nodes.set(1, newNode);
+            	this.tracker.set(branch, newNode);
             }
             else {
             	// adds node to secondary path
-            	this.nodes.get(1).setNodes(0, newNode);
+            	this.tracker.get(branch).setNodes(0, newNode);
             	// tracks last node in secondary path
-            	this.nodes.set(1, newNode);
+            	this.tracker.set(branch, newNode);
             }
         }
         else if (branch == 0) {            
          //   this.mainLastNode.setFirst(newNode);
          //   this.mainLastNode = newNode;
-            this.nodes.get(0).setNodes(0, newNode);
-            this.nodes.set(0, newNode);
+            this.tracker.get(branch).setNodes(branch, newNode);
+            this.tracker.set(branch, newNode);
         }
         
     }
 
-    public void split_path(){
+    public void split_path(int paths){
         //sets a flag
         //saves the reference from previous node
         if (this.splitFlag == false) {
             this.splitFlag = true;
            // this.splitNode = this.mainLastNode;
-            this.splitNode = this.nodes.get(0);
+            this.splitNode = this.tracker.get(0);
+            setTracker(paths);
+            this.splitNode.addToList(paths);
         }
         
     }
@@ -115,7 +132,7 @@ public class Tree {
         if (this.splitFlag == true) {
             this.splitFlag = false;
             this.joinFlag = true;
-        }      
+        }
     }
     
     public Node getRoot() {
@@ -146,12 +163,13 @@ public class Tree {
     public void print(Node node) {
         if (node != null) {
             // recursive calls
-            print(nodes.get(0));
-            print(nodes.get(1));
+            print(node.getNodes(0));
+            print(node.getNodes(1));
+//            print(node.getNodes(2));
             
             // print data.
             System.out.printf("Type:\n"); 
-            System.out.print(node.getTest());
+            System.out.print(node.getData());
             System.out.printf(", Id: "); 
             System.out.print(node.getId());
             if (node.getNodes(0) != null) {
@@ -161,6 +179,10 @@ public class Tree {
             if (node.getNodes(1) != null) {
                 System.out.printf("\nSecond:\n"); 
                 System.out.print( node.getNodes(1).getId() );
+            }
+            if (node.getNodes(2) != null) {
+                System.out.printf("\nSecond:\n"); 
+                System.out.print( node.getNodes(2).getId() );
             }
             
             System.out.printf("\n\n------------\n\n");
