@@ -13,10 +13,10 @@ can participate in one game. Variations of the game accommodate eight to ten pla
 
 ## Installation
 ```
-git clone https://github.com/RubenAMtz/game-of-life
+git clone https://github.com/RubenAMtz/game-of-life.git
 ```
 ### Requirements
 
 Java development kit 1.8  
-Java run time environment 1.8
+Java run time environment 1.8  
 Eclipse
