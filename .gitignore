@@ -1,4 +1,5 @@
 **/.vscode
-.vscode
+.vscode/
 *.log
-.bin
+bin/
+the-game-of-life---software-engineering-project/
