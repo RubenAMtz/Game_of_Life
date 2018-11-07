@@ -7,33 +7,46 @@ public class Node {
     public static int cls_id = 0;
     
     private Block block;
-    private ArrayList<Node> nodes;
+    private ArrayList<Node> nodes = new ArrayList<Node>();;
+    private String type;
     private int id;
 
-    //changes to node structure (at the bottom), we changed the variable names as well
-    public Node(String type, ArrayList<Node> nodes) {
+    public Node(String type) {
         this.block = new Block(type);
-        this.nodes = nodes;
+        this.type = type;
         this.id = cls_id;
         cls_id = cls_id + 1;
     }
     
+    public void addToList(int index) {
+    	while(this.nodes.size() <= index)  {
+    		this.nodes.add(null);
+    	}
+    }
+
     // Getters
     public Block getBlock() {
         return this.block;
     }
 
-    public ArrayList<Node> getNodes() {
-        return this.nodes;                
+    public Node getNodes(int index) {
+        return this.nodes.get(index);                
     }
 
     public int getId() {
         return this.id;
     }
     
+    public String getData() {
+		return type;
+	}
+    
     // Setters
-    public void setNodes(ArrayList<Node> nodes) {
-        this.nodes = nodes;
+    public void setNodes(int index, Node nodes) {
+        if (index >= this.nodes.size()-1){
+            this.addToList(index);
+        }
+        this.nodes.set(index, nodes);
     }
 
     public void setBlock(String type) {
@@ -45,6 +58,7 @@ public class Node {
 
 
 
+/*
 NODE:
 
     _________
