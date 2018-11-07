@@ -7,3 +7,4 @@ the-game-of-life---software-engineering-project/
 .classpath
 Planning.xlsx
 .project
+**/*.class
