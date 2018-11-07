@@ -1,9 +1,5 @@
 **/.vscode
-<<<<<<< HEAD
-**/.settings
-=======
 .vscode/
 *.log
 bin/
 the-game-of-life---software-engineering-project/
->>>>>>> block_node_fix
