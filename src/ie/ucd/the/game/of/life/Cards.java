@@ -11,7 +11,7 @@ public class Cards {
 	private ArrayList<Integer> deck = new ArrayList<Integer>();
 	private int deckSize;
 	private int codeSet;
-	//ArrayList<Integer> is an array of codes or IDs
+	
 	public Cards(ArrayList<Integer> cardDeck) {
 		// this.shuffle = true;
 		setDeckSize(cardDeck.size());
