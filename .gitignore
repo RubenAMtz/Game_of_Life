@@ -3,3 +3,4 @@
 *.log
 bin/
 the-game-of-life---software-engineering-project/
+.settings/
