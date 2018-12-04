@@ -20,3 +20,12 @@ git clone https://github.com/RubenAMtz/game-of-life.git
 Java development kit 1.8  
 Java run time environment 1.8  
 Eclipse
+
+## Progress so far:
+
+The functionality implemented so far is included in the master branch.  
+
+- A Board can be created in any way by speciifying any desired split path lengths and merging them as one.
+- Players are defined to have their own attributes which is exclusive to them but also have a Pawns class which extend these attributes.
+- Cards are being defined each with their own deck.
+- A master Game will control all functionlaity involved with gameplay.

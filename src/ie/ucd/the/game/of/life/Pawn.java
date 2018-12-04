@@ -1,17 +1,47 @@
 package ie.ucd.the.game.of.life;
 
-public class Pawn extends Player {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
+public class Pawn {
 	
-	private String carColor;
+	// The pawn is the car which will belong to a player and move accross the board
+	// 4 defeault colors at start that update when they are selected
+	public static ArrayList<String> pawns = new ArrayList<String>() {{
+		add("pink");
+		add("blue");
+		add("green");
+		add("yellow");
+	}};
+	private String carColor;	// General Pawn properties
 	private String gender;
 	private int children;
 	private boolean spouse;
 	
-	public Pawn(String colorChoice, String genderChoice) {
-		this.carColor = colorChoice;
-		this.gender = genderChoice;
+	public Pawn() {
+		// when creating a pawn, nothing special happens
+		this.spouse = false;
+		this.children = 0;
+		this.carColor = "";
+	}
+
+	public void chosenPawn(String carColor) {	// Choosing a pawn and update elements in static list
+		if (pawns.contains(carColor)) {		// if the string exists, set carcolor and remove from list
+			setCarColor(carColor);
+			pawns.remove(carColor);
+		}
+		else {				// To add repeat option here perhaps but that depends on GUI or not
+			System.out.print("The pawn does not exist, choose another color from the list: ");
+			printAvailablePawns();
+		}
+	}
+
+	public void printAvailablePawns() {
+		System.out.println(pawns);
 	}
 	
+	// Getters/Setters
 	public String getCarColor() {
 		return carColor;
 	}
@@ -24,8 +54,8 @@ public class Pawn extends Player {
 		return gender;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setGender(String gender) {		// Two possibilities only
+		this.gender = (gender == "male") ? gender : "female";
 	}
 
 	public int getChildren() {

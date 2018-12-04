@@ -11,27 +11,16 @@ public class Spinner {
 		spin();
 	}
 	
-	public int spin() {	// Manually call a spin whenever a turn is completed
-		spin = rand.nextInt(10) + 1;
+	public void spin() {	// Manually call a spin whenever a turn is completed
+		this.spin = rand.nextInt(10) + 1;
 		color = ((spin % 2 == 1) ? "red" : "black");
-		return spin;
 	}
 	
-	public int getSpin() {	//Return attribute
-		return spin;
+	public int getValue() {	//Return attribute
+		return this.spin;
 	}
 	
 	public String getColor() {
 		return color;
 	}
-	
-	/*public static void main(String[] args) {		// TEST Case
-		Spinner test = new Spinner();
-		
-		System.out.println(test.getSpin());
-		System.out.println(test.getColor());
-		test.Spin();
-		System.out.println(test.getSpin());
-		System.out.println(test.getColor());
-	}*/
 }

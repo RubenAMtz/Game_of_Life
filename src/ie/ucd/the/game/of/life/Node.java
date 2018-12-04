@@ -33,13 +33,17 @@ public class Node {
         return this.nodes.get(index);                
     }
 
+    public ArrayList<Node> getChildren() {
+        return this.nodes;
+    }
+
     public int getId() {
         return this.id;
     }
     
     public String getData() {
 		return type;
-	}
+    }
     
     // Setters
     public void setNodes(int index, Node nodes) {

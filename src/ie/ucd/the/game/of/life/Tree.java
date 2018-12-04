@@ -8,19 +8,22 @@ public class Tree {
     private Node splitNode; // it's a node reference
     private boolean splitFlag;
     private boolean joinFlag;
-
+    // + added
+    private Node foundNode = null;
+    private ArrayList<ArrayList<Node>> levels = new ArrayList<ArrayList<Node>>();
+    // private ArrayList<Node> level = new ArrayList<Node>();
     // Constructor
     public Tree(String data) {	// TODO change to Block from String type
-        this.root = new Node(data);        
+        this.root = new Node(data);
         this.tracker.add(this.root);
-        
+
         this.joinFlag = false; // split settings/variables:
         this.splitFlag = false;
         this.splitNode = null;
     }
     
     public void setTracker(int size) {
-    	while(this.tracker.size() < size)  {
+    	while(this.tracker.size() < size) {
     		this.tracker.add(null);
     	}
     }
@@ -28,7 +31,8 @@ public class Tree {
     public void addNode(String data, int branch) {
         // create new node with no children
         Node newNode = new Node(data);
-        
+        ArrayList<Node> level = new ArrayList<Node>();
+
         if (branch > 0 && this.splitFlag == false) {
             //throw java.lang.Exception("You have specified a different branch without splitting the branch first! :O");
         }
@@ -36,6 +40,7 @@ public class Tree {
         if (this.joinFlag) {
         	for(int i = 0; i < this.tracker.size(); i++) {
         		this.tracker.get(i).setNodes(0, newNode);
+
         		if(i == 0) {
         			this.tracker.set(i, newNode);
         		}
@@ -46,7 +51,7 @@ public class Tree {
             
             this.joinFlag = false;
             this.splitNode = null;
-        }            
+        }
         else if (branch > 0 && this.splitFlag) {
             if (this.splitNode.getNodes(branch) == null) {
             	this.splitNode.setNodes(branch, newNode);
@@ -64,7 +69,12 @@ public class Tree {
             this.tracker.get(branch).setNodes(branch, newNode);
             this.tracker.set(branch, newNode);
         }
+        // append to level the nodes in this.tracker
+        for(Node node : this.tracker) {
+            level.add(node);
+        }
         
+        this.levels.add(level);
     }
 
     public void split_path(int paths) {
@@ -75,7 +85,6 @@ public class Tree {
             setTracker(paths);
             this.splitNode.addToList(paths);
         }
-        
     }
 
     public void join_path() {
@@ -110,6 +119,65 @@ public class Tree {
                   O                 -> addNode("normal", first) %the last two has to reference
 
 */
+
+    public Node findId(Node node, int id) {
+        Node found = null;
+        return findId(node, id, found);
+    }
+    private Node findId(Node node, int id, Node found) {
+        // if (found != null) {
+        //     return found;
+        // }
+
+        if (node != null) {
+            
+                if (node.getId() == id) {
+                    System.out.println("Found it!");
+                    // this.foundNode = node;
+                    if (found == null) {
+                        System.out.println("null");
+                    }
+                    else {
+                        System.out.println("Im here: " + found.getId());
+                    }
+                    found = node;
+                    return found;
+                }
+                for(Node child : node.getChildren()) {
+                    findId(child, id, found);
+                }
+            
+        }
+        return found;
+    }
+    
+    public Node getFoundNode() {
+        return this.foundNode;
+    }
+
+    public void printTree() {
+        ArrayList<Integer> nodeIds = new ArrayList<Integer>();
+        // ArrayList<ArrayList<Integer>> tree = new ArrayList<ArrayList<Integer>>();
+
+        for (ArrayList<Node> level : this.levels) {
+            for(Node node : level) {
+                if (node != null) {
+                    // if ID of node IS NOT in nodeIds
+                    if (nodeIds.contains(node.getId()) == false) {
+                        // add ID of node to nodeIds
+                        nodeIds.add(node.getId());
+                        // store list of children nodes
+                        ArrayList<Node> children = node.getChildren();
+                        //
+                    }
+                    
+                    
+                }
+            }
+            //System.out.println("");
+        }
+    }
+
     public void print(Node node) {
         if (node != null) {
             // Recursive calls
