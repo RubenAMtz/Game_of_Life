@@ -27,7 +27,7 @@ Eclipse
 
 ## Progress so far:
 
-Every functionality is running now.
+Every functionality is running now.  
 No error handlers have been implemented yet.
 
 ## TODO
