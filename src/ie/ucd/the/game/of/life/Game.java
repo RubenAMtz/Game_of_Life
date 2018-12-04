@@ -139,8 +139,8 @@ public class Game {
 					player.addMoney(-100000);
 				}
 				else if (this.input.getNumber() == 0){
-					message("Card1: %s", career_deck.getDeck().get(0).getName());
-					message("Card2: %s", career_deck.getDeck().get(1).getName());
+					message("Card1: %s (salary: $%d)", career_deck.getDeck().get(0).getName(), career_deck.getDeck().get(0).getSalary());
+					message("Card2: %s (salary: $%d)", career_deck.getDeck().get(1).getName(), career_deck.getDeck().get(1).getSalary());
 					message("Select Card1 (1) or Card2 (2):");
 					this.input.inputNumber();
 					//assign card to player
@@ -219,8 +219,8 @@ public class Game {
 				and keep it because that will represent his/her job. The other card should be placed at the bottom of the deck.*/
 				// System.out.println("You have stopped at Graduation Stop");
 				message("You have stopped at Graduation Stop");
-				message("Card1: %s", college_career_deck.getDeck().get(0).getName());
-				message("Card2: %s", college_career_deck.getDeck().get(1).getName());
+				message("Card1: %s (salary: $%d)", college_career_deck.getDeck().get(0).getName(), college_career_deck.getDeck().get(0).getSalary());
+				message("Card2: %s (salary: $%d)", college_career_deck.getDeck().get(1).getName(), college_career_deck.getDeck().get(1).getSalary());
 				message("Select Card1 (1) or Card2 (2):");
 				this.input.inputNumber();
 				//assign card to player
@@ -410,8 +410,8 @@ public class Game {
 					else{	
 						chosenDeck = career_deck;
 					}
-					message("Card1: %s", chosenDeck.getDeck().get(0).getName());
-					message("Card2: %s", chosenDeck.getDeck().get(1).getName());
+					message("Card1: %s (salary: $%d)", chosenDeck.getDeck().get(0).getName(), chosenDeck.getDeck().get(0).getSalary());
+					message("Card2: %s (salary: $%d)", chosenDeck.getDeck().get(1).getName(),chosenDeck.getDeck().get(1).getSalary());
 					message("Select Card1 (1) or Card2 (2):");
 					this.input.inputNumber();
 					//remove current card from player and place it in the deck it belongs to
