@@ -9,11 +9,7 @@ Life, the game of life, also simply known as Life, is a board game originally cr
 through his or her life, from college to retirement, with jobs, marriage, and possible children along the way. Two to six players 
 can participate in one game. Variations of the game accommodate eight to ten players.
 
-![Life](https://2.bp.blogspot.com/-0LUgWczdl3I/VtJl1qXlrVI/AAAAAAAA8ZE/Sdi9o1AEos0/s1600/LifeBoard.jpg)
-
-## Run the demo
-
-We have pushed the latest demo in the root folder, just download and execute.
+![Life](https://cdn.shopify.com/s/files/1/2236/1413/products/l1292_1024x1024.jpg?v=1505921492)
 
 ## Installation
 ```
@@ -27,11 +23,9 @@ Eclipse
 
 ## Progress so far:
 
-Every functionality is running now.  
-No error handlers have been implemented yet.
+The functionality implemented so far is included in the master branch.  
 
-## TODO
-
-Improve graphic interface.  
-Add error handler for invalid inputs.  
-Add test cases.
+- A Board can be created in any way by speciifying any desired split path lengths and merging them as one.
+- Players are defined to have their own attributes which is exclusive to them but also have a Pawns class which extend these attributes.
+- Cards are being defined each with their own deck.
+- A master Game will control all functionlaity involved with gameplay.

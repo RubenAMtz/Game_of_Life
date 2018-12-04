@@ -53,28 +53,15 @@ public class Board {
 //		t.addNode("action", 1);
 //		t.addNode("action", 2);
 //		t.join_path();                   //if there is a join_path flag
-		t.addNode("retirement",		0);
-		t.addNode("retirement", 	0);
-		t.addNode("retirement",		0);
-		t.addNode("retirement", 	0);
-		t.addNode("retirement", 	0);
-		t.addNode("retirement", 	0);
-		t.addNode("retirement", 	0);
-		t.addNode("retirement",		0);
-		t.addNode("retirement",		0);
-
-		
-		
-
-		// t.addNode("action",		0);
-		// t.addNode("payday", 	0);
-		// t.addNode("holiday",		0);
-		// t.addNode("spin2win", 	0);
-		// t.addNode("action", 	0);
-		// t.addNode("action", 	0);
-		// t.addNode("payday", 	0);
-		// t.addNode("action",		0);
-		// t.addNode("marriagestop",		0);
+		t.addNode("action",		0);
+		t.addNode("payday", 	0);
+		t.addNode("holiday",		0);
+		t.addNode("spin2win", 	0);
+		t.addNode("action", 	0);
+		t.addNode("action", 	0);
+		t.addNode("payday", 	0);
+		t.addNode("action",		0);
+		t.addNode("marriagestop",		0);
 		//mock retirement, was action
 		t.addNode("action",		0);//****** p1*/
 		t.addNode("action",		0);
