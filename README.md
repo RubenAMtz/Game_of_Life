@@ -32,6 +32,6 @@ No error handlers have been implemented yet.
 
 ## TODO
 
-Improve graphic interface.
-Add error handler for invalid inputs.
+Improve graphic interface.  
+Add error handler for invalid inputs.  
 Add test cases.
