@@ -5,19 +5,20 @@ import java.util.ArrayList;
 public class Player {
 	// Attributes/Properties
 	private static int number = 0;
+	private int loan;
 	private int pNum;
 	private Node position;
 	private int money;
-	private int loan;
 	private String career;
 	private boolean degree;
 	private int turn;
 	private Pawn pawn;
-	private boolean status; //marital
+	private boolean status; // marital
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	private int houses;
 	private int salary;
 	private boolean retired;
+	private int bonusNum;
 	
 	public Player() {
 		number += 1;
@@ -32,8 +33,9 @@ public class Player {
 		}
 		cards += " ||";
 		return cards;
-  }
-
+  	}
+	  
+	// Setters/Getters for all attributes
 	public boolean isRetired(){
 		return getRetired();
 	}
@@ -45,8 +47,7 @@ public class Player {
 	public void setRetired(boolean value){
 		this.retired = value;
 	}
-	
-	// Setters/Getters for all attributes
+
 	public int getSalary() {
 		return this.salary;
 	}
@@ -74,7 +75,7 @@ public class Player {
 	public void addCard(Card card){
 		this.setCards(card);
 	}
-	
+
 	public Node getPosition() {
 		return position;
 	}
@@ -92,7 +93,15 @@ public class Player {
 	}
 
 	public void addMoney(int money){
-		this.money = this.money + money;
+		this.money += money;
+		addLoan();
+	}
+
+	public void addLoan() {
+		while (this.money < 0) {
+			setMoney(getMoney()+50000);
+			setLoan(getLoan()+1);
+		}
 	}
 
 	public boolean getStatus(){
@@ -102,7 +111,7 @@ public class Player {
 	public void setStatus(boolean status){
 		this.status = status;
 	}
-	
+
 	public int getLoan() {
 		return loan;
 	}
@@ -156,19 +165,18 @@ public class Player {
 	}
 
 	public void paysMoneyTo(Player player, int amount) {
-		this.setMoney(this.getMoney() - amount);
-		player.setMoney(player.getMoney() + amount);	
+		if (amount >= 0) {
+			this.setMoney(this.getMoney() - amount);
+			addLoan();
+			player.setMoney(player.getMoney() + amount);
+		}
 	}
 
-	// Methods Declaration, can possibly be extended for lower classes
-	// public abstract void choosePawn(String pawn);
-	// public abstract void choosePath(int cOrCc);
-	// public abstract void chooseCareer(boolean pickOne);
-	// public abstract void spin();
-	// public abstract void drawCard();		// include draw action, career, house or any like such
-	// public abstract void payMoney();		// to bank or player
-	// public abstract void receiveMoney();	// from bank or player
-	// public abstract void changePosition();	// for spinner, then turn update
-	// public abstract void chooseSpinToWin();	// return number chosen
-	// public abstract int getLoans();
+	public int getBonusNum() {
+		return this.bonusNum;
+	}
+
+	public void setBonusNum(int value) {
+		this.bonusNum = value;
+	}
 }

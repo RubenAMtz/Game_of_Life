@@ -9,15 +9,13 @@ import java.util.Collections;
 public class Deck {
 	
 	private ArrayList<Card> cards = new ArrayList<>();
-	private int size;
 	private String type;
-	private ActionCard action_card = null;
+	ActionCard action_card = null;
 	
 	public Deck(String type) {
 		this.type = type;
 		//size needs to take the size of the elements in the array, not a given parameter.
 		create();
-		this.size = cards.size();
 		shuffle();
 	}	
 	// steps:

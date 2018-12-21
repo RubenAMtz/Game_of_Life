@@ -2,7 +2,6 @@ package ie.ucd.the.game.of.life;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.lang.model.util.ElementScanner6;
 
 public class Game {
 	private ArrayList<Player> players;
@@ -13,10 +12,10 @@ public class Game {
 	Node nextNode;
 	private boolean retirement;
 
-	private Deck action_deck;
-	private	Deck house_deck;
-	private Deck career_deck;
-	private Deck college_career_deck;
+	private Deck actionDeck;
+	private	Deck houseDeck;
+	private Deck careerDeck;
+	private Deck collegeCareerDeck;
 
 	private Pawn pawns;			// Pawn which belong to player and are updated in this class
 	private Board board;		// default board
@@ -28,12 +27,14 @@ public class Game {
 	private int playerSteps = 0;
 	private ArrayList<Player> placements = new ArrayList<Player>();
 	private Player winner;
+	public static int[] playerNumbers = {2, 3, 4};
+	public static int[] pathSelection = {0, 1};
+	public static int[] cardSelection = {1, 2};
+	public static String[] genderSelection = {"male", "female"};
+	public ArrayList<Integer> inputArray  = new ArrayList<Integer>();
 
-	public Game() {						
-		players = new ArrayList<Player>();
-		pawns = new Pawn();
-		this.spinner = new Spinner();
-		input = new Input();
+	public Game() {
+		this.input = new Input();
 		StartGame();
 		this.players = getPlayers();
 		beginGameMessages();
@@ -41,7 +42,7 @@ public class Game {
 	}
 
 	public void beginGameMessages() {
-		message("\n**************************************** Let's Play ******************************************");
+		message("\n**************************************** Let's Play ******************************************\n");
 	}
 
 	public void initiateMovement() {
@@ -54,22 +55,45 @@ public class Game {
 				stopFlag = false;
 				repeatPlayerTurn = false;
 				currentPlayer = this.getPlayer(turn);
+				// printBoardForPlayer(currentPlayer);
 
 				if (!currentPlayer.isRetired()) {
+					message("Press ENTER to go to the next turn");
+					this.input.inputString();
+					printArrPlayerProperties(this.players);
 					this.playerTurn(currentPlayer, spinner);
 				}
-				printPlayerProperties(currentPlayer);
-				//message("Retirement: %s", this.retirement);
-				//printDecks();
 				if (!repeatPlayerTurn) {
 					turn = turn + 1;
 				}
 			}
-		}		
+		}
+		checkWinner();
 		announceWinner();
 		announcePlacements();
 	}
 
+	public void checkWinner() {
+		// list of
+        ArrayList<Integer> playersMoney = new ArrayList<Integer>();
+        for (Player p : players) {
+            playersMoney.add(p.getMoney());							
+        }
+        // sorts in ascending order
+        Collections.sort(playersMoney, Collections.reverseOrder());
+
+        // iterate over players money (sorted)						
+        for (int playerMoney : playersMoney) {
+            // iterate over players
+            for (Player p : players) {
+                // find money of every player and place the player in placements in order
+                if (playerMoney == p.getMoney()) {
+                    placements.add(p);
+                }
+            }
+        }
+        winner = placements.get(0);
+	}
 
 	public void announceWinner() {
 		message("Congratulations Player" + this.winner.getpNum() + ". You're the Winner!");
@@ -79,41 +103,47 @@ public class Game {
 		for(int i = 0; i < placements.size(); i++) {
 			message((i+1) + ".- Player" + this.placements.get(i).getpNum() + " Money: " + this.placements.get(i).getMoney());
 		}
+		message("Thanks for playing...Press Enter to quit");
+		this.input.inputString();
+		this.input.inputClose();
 	}
 
 	public void printPlayersPosition() {
-		for(int i = 0; i < this.getNumPlayers(); i++){
+		for(int i = 0; i < this.getNumPlayers(); i++) {
 			message("Positions: ");
 			message(this.players.get(i).getPosition().getId());
 			message(this.players.get(i).getPosition().getData());
 		}
 	}
 
-	public void printPlayerProperties(Player currentPlayer) {
-		message("-------------------------------PLAYER %d ATTRIBUTES-------------------------------", currentPlayer.getpNum());
-		message("Position: " + currentPlayer.getPosition().getData());
-		message("Block ID: " + currentPlayer.getPosition().getId());
-		message("Cards: " + currentPlayer.cardsToString());
-		message("Career: " + currentPlayer.getCareer());
-		message("Salary: " + currentPlayer.getSalary());
-		message("Account: %d", currentPlayer.getMoney());
-		message("Loans: %d", currentPlayer.getLoan());
-		message("Status: " + (currentPlayer.getPawn().isSpouse() ? "Married" : "Single"));
-		message("Houses: %d", currentPlayer.getHouses());
-		message("Kids: %d", currentPlayer.getPawn().getChildren());
-		message("Retired players: %d", this.retiredPlayers);
-		message("---------------------------------------------------------------------------------");
+	public void printArrPlayerProperties(ArrayList<Player> currentPlayer) {
+		for(int i = 0; i < currentPlayer.size(); i++) {
+			message("-------------------------------PLAYER %d (%s) ATTRIBUTES-------------------------------", currentPlayer.get(i).getpNum(), currentPlayer.get(i).getPawn().getCarColor());
+			message("Position: " + currentPlayer.get(i).getPosition().getData());
+			message("Block ID: " + currentPlayer.get(i).getPosition().getId());
+			message("Cards: " + currentPlayer.get(i).cardsToString());
+			message("Career: " + currentPlayer.get(i).getCareer());
+			message("Salary: " + currentPlayer.get(i).getSalary());
+			message("Bonus Number: " + currentPlayer.get(i).getBonusNum());
+			message("Account: %d", currentPlayer.get(i).getMoney());
+			message("Loans: %d", currentPlayer.get(i).getLoan());
+			message("Status: " + (currentPlayer.get(i).getPawn().isSpouse() ? "Married" : "Single"));
+			message("Houses: %d", currentPlayer.get(i).getHouses());
+			message("Kids: %d", currentPlayer.get(i).getPawn().getChildren());
+			message("Retired players: %d", this.retiredPlayers);
+			message("------------------------------------------------------------------------------------");
+		}
 	}
 
-	public void printDecks(){
+	public void printDecks() {
 		message("-------------------------------DECKS-------------------------------");
-		message("Action Deck:" + action_deck.deckToString());
+		message("Action Deck:" + actionDeck.deckToString());
 		message(" ");
-		message("House Deck:" + house_deck.deckToString());
+		message("House Deck:" + houseDeck.deckToString());
 		message(" ");
-		message("Career Deck:" + career_deck.deckToString());
+		message("Career Deck:" + careerDeck.deckToString());
 		message(" ");
-		message("College Career Deck:" + college_career_deck.deckToString());
+		message("College Career Deck:" + collegeCareerDeck.deckToString());
 		message(" ");
 		message("-------------------------------------------------------------------");
 	}
@@ -122,257 +152,16 @@ public class Game {
 		Node currentPosition = player.getPosition();
 		String blockType = currentPosition.getBlock().getType();
 		int cardIndex;
-		ArrayList<Card> playerCards;
-		int playerKids;
 		chosenPath = 0;
-		int poolPrice;
+		ArrayList<Card> playerCards;
 		//split nodes share the stop property, so they are tested at stop:
 		if (currentPosition.getBlock().getStop()) {
-			if (blockType.equals("start")){
-				// all split cases here
-				message("Which path would you like to take: Press (0) for Career path or Press (1) for College career path");
-				this.input.inputNumber();
-				chosenPath = this.input.getNumber();
-				//player takes college career path:
-				if (this.input.getNumber() == 1){
-					//player.setMoney(player.getMoney()-100000);
-					player.addMoney(-100000);
-				}
-				else if (this.input.getNumber() == 0){
-					message("Card1: %s (salary: $%d)", career_deck.getDeck().get(0).getName(), career_deck.getDeck().get(0).getSalary());
-					message("Card2: %s (salary: $%d)", career_deck.getDeck().get(1).getName(), career_deck.getDeck().get(1).getSalary());
-					message("Select Card1 (1) or Card2 (2):");
-					this.input.inputNumber();
-					//assign card to player
-					cardIndex = this.input.getNumber()-1;
-					player.addCard(career_deck.getDeck().get(cardIndex));
-					//assign name to player's career:
-					player.setCareer(career_deck.getDeck().get(cardIndex).getName());
-					player.setSalary(career_deck.getDeck().get(cardIndex).getSalary());
-					//remove cards from deck, set left card at the bottom of the deck:
-					if (this.input.getNumber()==1){
-						//check if the card is place at the bottom of the deck?
-						career_deck.getDeck().add(career_deck.getDeck().get(1));
-						//index minus 1 to match correct order:
-						career_deck.getDeck().remove(0);
-						career_deck.getDeck().remove(0);
-					}
-					else{
-						//in case the other card was selected
-						career_deck.getDeck().add(career_deck.getDeck().get(0));
-						career_deck.getDeck().remove(0);
-						career_deck.getDeck().remove(0);
-						
-					}	
-				}
-				else {
-					message("Error...");
-				}
-			}
-			if (blockType.equals("splitns")){
-				/*The player can decide to keep his/her job or change career. If the player decides to change career, s/he should give the bank 100K, take the top college career card on the deck and place the current career/college career card at the bottom of the deck. In any of these cases the player will have to move his/her car pawn again using the spinner.*/
-				// System.out.println("Which path would you like to take: Press (0) for Same path or Press (1) for Night School path");
-				message("Which path would you like to take: Press (0) for Same path or Press (1) for Night School path");
-				this.input.inputNumber();
-				chosenPath = this.input.getNumber();
-				//stop moving and spin again
-				stopFlag = true;
-				repeatPlayerTurn = true;
-				
-				//if the player selects nights school
-				if (this.input.getNumber() == 1) {
-					//player.setMoney(player.getMoney() - 100000);
-					player.addMoney(-100000);
-					//remove card from players deck, and set it at bottom of the deck
-					playerCards = player.getCards();
-					for(int i = 0; i < playerCards.size(); i++){
-						if (playerCards.get(i).getType().equals("career")){
-							career_deck.getDeck().add(playerCards.get(i));
-							playerCards.remove(i);
-							message("A Career card has been placed at the bottom of the deck");
-						}
-						else if (playerCards.get(i).getType().equals("college_career")){
-							college_career_deck.getDeck().add(playerCards.get(i));
-							playerCards.remove(i);
-							message("A College Career card has been placed at the bottom of the deck");
-						}
-					}
-					//take top card from deck
-					message("Card picked is: %s", college_career_deck.getDeck().get(0).getName());
-					//assign card to player
-					player.addCard(college_career_deck.getDeck().get(0));
-					//assign name to player's career:
-					player.setCareer(college_career_deck.getDeck().get(0).getName());
-					player.setSalary(college_career_deck.getDeck().get(0).getSalary());
-				}
-			}
-					
-			if (blockType.equals("splitfam")){
-				message("Which path would you like to take: Press (0) for Family path or Press (1) for No Family path");
-				this.input.inputNumber();
-				chosenPath = this.input.getNumber();
-			}
-					/*The player should decide whether to move towards the family path (i.e. having kids) or towards the life path (i.e. not having kids). */
-				
-			if (blockType.equals("graduationstop")){
-				/*The current player should take the top 2 College Career cards from the deck. S/he should choose his/her favorite card
-				and keep it because that will represent his/her job. The other card should be placed at the bottom of the deck.*/
-				// System.out.println("You have stopped at Graduation Stop");
-				message("You have stopped at Graduation Stop");
-				message("Card1: %s (salary: $%d)", college_career_deck.getDeck().get(0).getName(), college_career_deck.getDeck().get(0).getSalary());
-				message("Card2: %s (salary: $%d)", college_career_deck.getDeck().get(1).getName(), college_career_deck.getDeck().get(1).getSalary());
-				message("Select Card1 (1) or Card2 (2):");
-				this.input.inputNumber();
-				//assign card to player
-				cardIndex = this.input.getNumber()-1;
-				player.addCard(college_career_deck.getDeck().get(cardIndex));
-				//assign name to player's career:
-				player.setCareer(college_career_deck.getDeck().get(cardIndex).getName());
-				player.setSalary(college_career_deck.getDeck().get(cardIndex).getSalary());
-				//remove card from deck, set left card at the bottom of the deck:
-				if (this.input.getNumber()==1){
-					//check if the card is place at the bottom of the deck?
-					college_career_deck.getDeck().add(college_career_deck.getDeck().get(1));
-					//index minus 1 to match correct order:
-					college_career_deck.getDeck().remove(0);
-					college_career_deck.getDeck().remove(0);
-				}
-				else{
-					//in case the other card was selected
-					college_career_deck.getDeck().add(college_career_deck.getDeck().get(0));
-					college_career_deck.getDeck().remove(0);
-					college_career_deck.getDeck().remove(0);
-				}	
-			}
-			if (blockType.equals("marriagestop")){
-				message("You have stopped and are getting married");
-				player.getPawn().setSpouse(true);
-				ArrayList<Player> players = this.players;
-				for(int index = 0; index < this.getNumPlayers(); index++){
-					if (players.get(index).getpNum() != player.getpNum()){
-						this.spinner.spin();
-						message("Player%d spins: %d", players.get(index).getpNum(), this.spinner.getValue());
-						if (this.spinner.getValue() % 2 != 0){
-							players.get(index).paysMoneyTo(player, 100000);
-							message("Player%d pays 100000 to Player%d",players.get(index).getpNum(), player.getpNum());
-						}
-						else{
-							players.get(index).paysMoneyTo(player, 50000);
-							message("Player%d pays 50000 to Player%d",players.get(index).getpNum(), player.getpNum());
-						}
-					}
-				}
-				//stop moving and spin again
-				stopFlag = true;
-				repeatPlayerTurn = true;
-			}
-					/*The status of the car pawn should be updated to indicate that the player has a spouse. Each of the other players should spin 
-					the spinner. If the spinner ends up on an odd number, the player spinning the spinner has to give the married player 100K, 50K 
-					otherwise. Finally the married player should spin the spinner to move again.*/
-			if (blockType.equals("babystop")){
-				message("You have stopped to see how many babies you had");
-				message("Press enter to Spin:");
-				this.input.inputString();
-				this.spinner.spin();
-				message("Player%d spins: %d", player.getpNum(), this.spinner.getValue());
-				if (this.spinner.getValue() < 4) {
-					player.getPawn().setChildren(player.getPawn().getChildren() + 0);
-				}
-				else if (this.spinner.getValue() > 3 && this.spinner.getValue() < 7) {
-					player.getPawn().setChildren(player.getPawn().getChildren() + 1);
-				}
-				else if (this.spinner.getValue() > 6 && this.spinner.getValue() < 9){
-					player.getPawn().setChildren(player.getPawn().getChildren() + 2);
-				}
-				else {
-					player.getPawn().setChildren(player.getPawn().getChildren() + 3);
-				}
-			}
-					/*The player should spin the spinner to see how many babies s/he had. 1-3 on the spinner corresponds to zero kids. 4-6 on the spinner corresponds to 1 kid. 7-8 on the spinner corresponds to 2 kids. 9-10 on the spinner corresponds to 3 kids. */
-			if (blockType.equals("holidaystop")){
-				message("You have stopped for holidays, enjoy");
-			}
-					/*the current player should do nothing.*/
-			if (blockType.equals("retirement")){
-					Card house_to_sell;
-					message("You have reached retirement, time to enjoy life");
-					//test variable:
-					player.setRetired(true);
-					this.retiredPlayers = 0;
-					for (int i = 0; i < this.getNumPlayers(); i++){
-						if (this.players.get(i).isRetired()){
-							this.retiredPlayers++;
-						}
-					}
-					stopFlag = true;
-					poolPrice = 500000 - this.retiredPlayers * 100000;
-					//player.setMoney(player.getMoney() + poolPrice);
-					player.addMoney(poolPrice);
-					//player.setMoney(player.getLoan() * 60000);
-					player.addMoney(player.getLoan() * -60000);
-					//all players are retired:
-					message("Retired players: %d", this.retiredPlayers);
-					message("Num of players: %d", this.getNumPlayers());
-					if (this.retiredPlayers == this.getNumPlayers()){
-						this.retirement = true;
-						for (int i = 0; i < this.getNumPlayers(); i++){
-							playerCards = this.players.get(i).getCards();
-							playerKids = this.players.get(i).getPawn().getChildren();
-							this.players.get(i).addMoney(playerKids * 50000);
-							for(int j = 0; j < playerCards.size(); j++){
-								if (playerCards.get(j).getType().equals("action")){
-									this.players.get(i).addMoney(100000);
-								}
-								//houses to sell
-								if (playerCards.get(j).getType().equals("house")){
-									house_to_sell = playerCards.get(j);
-									//player.getCards().remove(j);
-									message("Press enter to Spin to determine the selling price");
-									this.input.inputString();
-									spinner.spin();
-									if (spinner.getValue() % 2 != 0){
-										message("House will be sold for: %d", house_to_sell.getSpinRedPrice());
-										player.addMoney(house_to_sell.getSpinRedPrice());
-									}
-									else{
-										message("House will be sold for: %d", house_to_sell.getSpinBlackPrice());
-										player.addMoney(house_to_sell.getSpinBlackPrice());
-									}
-								}
-							}
-						}
-						// list of
-						ArrayList<Integer> playersMoney = new ArrayList<Integer>();
-						//ArrayList<Player> placements = new ArrayList<Player>();
-						for (Player p : this.players) {
-							playersMoney.add(p.getMoney());							
-						}
-						// sorts in ascending order
-						Collections.sort(playersMoney, Collections.reverseOrder());
-						// for(int i = 0; i < playersMoney.size(); i++) {
-						// 	message(i + ".- Money: " + playersMoney.get(i));
-						// }
-
-						// iterate over players money (sorted)						
-						for (int playerMoney : playersMoney) {
-							// iterate over players
-							for (Player p : this.players) {
-								// find money of every player and place the player in placements in order
-								if (playerMoney == p.getMoney()) {
-									this.placements.add(p);
-								}
-							}
-						}
-
-						this.winner = this.placements.get(0);
-
-						// for(int i = 0; i < placements.size(); i++) {
-						// 	message(i + ".- Player" + this.placements.get(i).getpNum() + " Money: " + this.placements.get(i).getMoney());
-						// }
-					}
-					
-				}
-			}
+			currentPosition.getBlock().getTestStop().action(player, careerDeck, collegeCareerDeck, houseDeck, this.players);
+			chosenPath = currentPosition.getBlock().getTestStop().getChosenPath();
+			this.stopFlag = currentPosition.getBlock().getTestStop().isStop();
+			this.repeatPlayerTurn = currentPosition.getBlock().getTestStop().isRepeat();
+			this.retirement = currentPosition.getBlock().getTestStop().isRetirement();
+		}
 		
 		if (currentPosition.getBlock().getPay()) {
 			playerCards = player.getCards();
@@ -389,41 +178,40 @@ public class Game {
 		}
 		
 		if (currentPosition.getBlock().getDrawActionCard()) {
-			Card action_card;
-			String card_name;
+			Card actionCard;
+			String cardName;
 			Deck chosenDeck;
 
 			if ((totalSteps-1) == playerSteps){
-				action_card = action_deck.getDeck().get(0);
-				card_name = action_deck.getDeck().get(0).getName();
-				player.addCard(action_card);
-				action_deck.getDeck().remove(0);
-				message("Your action card is: " + card_name);
+				actionCard = actionDeck.getDeck().get(0);
+				cardName = actionDeck.getDeck().get(0).getName();
+				player.addCard(actionCard);
+				actionDeck.getDeck().remove(0);
+				message("Your action card is: " + cardName);
 				
-				if (card_name.equals("career_change")){
+				if (cardName.equals("career_change")){
 					message("You have selected a career change card");
-					message("Do want College or Career deck? Press (0) for College Career deck or Press (1) for Career deck");
-					this.input.inputNumber();
+					message("Do want College or Career deck?");
+					this.input.strictInputNumber(pathSelection, "Press (0) for College Career deck or Press (1) for Career deck");
 					if (this.input.getNumber()==0){
-						chosenDeck = college_career_deck;
+						chosenDeck = collegeCareerDeck;
 					}
 					else{	
-						chosenDeck = career_deck;
+						chosenDeck = careerDeck;
 					}
-					message("Card1: %s (salary: $%d)", chosenDeck.getDeck().get(0).getName(), chosenDeck.getDeck().get(0).getSalary());
-					message("Card2: %s (salary: $%d)", chosenDeck.getDeck().get(1).getName(),chosenDeck.getDeck().get(1).getSalary());
-					message("Select Card1 (1) or Card2 (2):");
-					this.input.inputNumber();
+					message("Card1: %s, SALARY %dK, Bonus Number %d", chosenDeck.getDeck().get(0).getName(), chosenDeck.getDeck().get(0).getSalary()/1000, chosenDeck.getDeck().get(0).getBonus());
+					message("Card2: %s, SALARY %dK, Bonus Number %d", chosenDeck.getDeck().get(1).getName(), chosenDeck.getDeck().get(1).getSalary()/1000, chosenDeck.getDeck().get(1).getBonus());
+					this.input.strictInputNumber(cardSelection, "Select Card1 (1) or Card2 (2):");
 					//remove current card from player and place it in the deck it belongs to
 					playerCards = player.getCards();
 					for(int i = 0; i < playerCards.size(); i++){
 						if (playerCards.get(i).getType().equals("career")){
-							career_deck.getDeck().add(playerCards.get(i));
+							careerDeck.getDeck().add(playerCards.get(i));
 							playerCards.remove(i);
 							message("A Career card has been placed at the bottom of the deck");
 						}
 						else if (playerCards.get(i).getType().equals("college_career")){
-							college_career_deck.getDeck().add(playerCards.get(i));
+							collegeCareerDeck.getDeck().add(playerCards.get(i));
 							playerCards.remove(i);
 							message("A College Career card has been placed at the bottom of the deck");
 						}
@@ -434,6 +222,7 @@ public class Game {
 					//assign name to player's career:
 					player.setCareer(chosenDeck.getDeck().get(cardIndex).getName());
 					player.setSalary(chosenDeck.getDeck().get(cardIndex).getSalary());
+					player.setBonusNum(chosenDeck.getDeck().get(cardIndex).getBonus());
 					//remove card from deck, set left card at the bottom of the deck:
 					if (this.input.getNumber()==1){
 						chosenDeck.getDeck().add(chosenDeck.getDeck().get(1));
@@ -447,15 +236,17 @@ public class Game {
 						chosenDeck.getDeck().remove(0);
 					}	
 				}
-				if (card_name.equals("players_pay")){
+				if (cardName.equals("players_pay")) {
 					message("You have selected a Players Pay card");
-					message("Please select one of the players to get money from: ");
+					message("Please select a player to get money from: ");
 					for (int i = 0; i < this.getNumPlayers(); i++){
 						if (player.getpNum() != this.players.get(i).getpNum()){
-							message("For Player%d, press %d ", this.players.get(i).getpNum(), this.players.get(i).getpNum());	
+							message("For Player%d ($%d), press %d ", this.players.get(i).getpNum(), this.players.get(i).getMoney(), this.players.get(i).getpNum());	
+							inputArray.add(player.getpNum());
 						}
 					}
-					//check that player selected is different than current player:
+					//check that player selected is different than current player
+					// this.input.strictIntInputNumber(inputArray, "Please select a player number");
 					this.input.inputNumber();
 					while(this.input.getNumber() == player.getpNum() || this.input.getNumber() > this.players.size()){
 						message("Please enter a correct input");
@@ -470,17 +261,17 @@ public class Game {
 					}
 
 				}
-				if (card_name.equals("pay_the_bank")){
+				if (cardName.equals("pay_the_bank")){
 					int amount;
-					amount = action_card.getAmount();
+					amount = actionCard.getAmount();
 					message("You had %d", player.getMoney());
 					message("You now pay the bank: %d", amount);
 					player.addMoney(-amount);
 					message("You now have %d", player.getMoney());
 				}
-				if (card_name.equals("bank_pays_you")){
+				if (cardName.equals("bank_pays_you")){
 					int amount;
-					amount = action_card.getAmount();
+					amount = actionCard.getAmount();
 					message("You had %d", player.getMoney());
 					message("You get paid by the bank: %d", amount);
 					player.addMoney(amount);
@@ -489,74 +280,48 @@ public class Game {
 			}
 		}
 		if (currentPosition.getBlock().getDrawHouseCard()) {
-			Card house_to_sell;
-			if ((totalSteps-1) == playerSteps){
-				message("You are at a House block! Buy or sell a house?, (0) to buy (1) to sell");
-				this.input.inputNumber();
+			int[] houseBlock = {0, 1, 2};
+			if ((totalSteps-1) == playerSteps) {
+				
+				message("You are at a House block! Buy or sell a house?");
+				this.input.strictInputNumber(houseBlock, "Press (0) to do nothing or (1) to buy or (2) to sell");
 				//player takes college career path:
-				if (this.input.getNumber() == 1 && player.getHouses() == 0){
-					message("Sorry, you don't have any houses");
-					this.input.setNumber(0);
-					message("Try buying a house first:");
+				if (this.input.getNumber() == 2 && player.getHouses() == 0) {
+					message("Sorry, you don't have any houses. Try buying a house first:");
+					this.input.strictInputNumber(pathSelection, "Press (0) to do nothing or (1) to buy");
 				}
 
-				if (this.input.getNumber() == 1 && player.getHouses() > 0){
-					//TODO
-					// check if player has any house cards
-				
-					
-					message("Select a house to sell from your deck: ");
-					for (int i = 0; i < player.getCards().size(); i++){
-						message("(%d) for Card: %s", i+1, player.getCards().get(i).getName());
-					}
-					this.input.inputNumber();
-					while(player.getCards().get(this.input.getNumber()-1).getType() != "house"){
-						message("Please select a house card");
-						this.input.inputNumber();
-					}
-					house_to_sell = player.getCards().get(this.input.getNumber()-1);
-					player.getCards().remove(this.input.getNumber()-1);
-					message("Press enter to Spin to determine the selling price");
-					this.input.inputString();
-					spinner.spin();
-					if (spinner.getValue() % 2 != 0){
-						message("House will be sold for: %d", house_to_sell.getSpinRedPrice());
-						player.addMoney(house_to_sell.getSpinRedPrice());
-					}
-					else{
-						message("House will be sold for: %d", house_to_sell.getSpinBlackPrice());
-						player.addMoney(house_to_sell.getSpinBlackPrice());
-					}
-					house_deck.getDeck().add(house_to_sell);
-					player.setHouses(player.getHouses()-1);
-					
+				if (this.input.getNumber() == 2 && player.getHouses() > 0) {	// Logic for selling a house
+					player = sellHouseCard(player, 1, this.input, houseDeck, spinner);
 				}
-				else if  (this.input.getNumber() == 0){
-					message("Card1: %s (for $%d)", house_deck.getDeck().get(0).getName(), house_deck.getDeck().get(0).getPurchase());
-					message("Card2: %s (for $%d)", house_deck.getDeck().get(1).getName(), house_deck.getDeck().get(1).getPurchase());
-					message("Select Card1 (1) or Card2 (2):");
-					this.input.inputNumber();
+				else if  (this.input.getNumber() == 1) {
+					message("You have $%d", player.getMoney());
+					message("Card1: %s, Purchase Price %dK", houseDeck.getDeck().get(0).getName(), houseDeck.getDeck().get(0).getPurchase()/1000);
+					message("Spin for Sale Price\nSpin Red (%d)\nSpin Black (%d)", houseDeck.getDeck().get(0).getSpinRedPrice(), houseDeck.getDeck().get(0).getSpinBlackPrice());
+					message("Card2: %s, Purchase Price %dK", houseDeck.getDeck().get(1).getName(), houseDeck.getDeck().get(1).getPurchase()/1000);
+					message("Spin for Sale Price\nSpin Red (%d)\nSpin Black (%d)", houseDeck.getDeck().get(1).getSpinRedPrice(), houseDeck.getDeck().get(1).getSpinBlackPrice());
+					this.input.strictInputNumber(cardSelection, "Select Card1 (1) or Card2 (2):");
 					cardIndex = this.input.getNumber()-1;
-					if (player.getMoney() >= house_deck.getDeck().get(cardIndex).getPurchase()){
-						player.addMoney(-house_deck.getDeck().get(cardIndex).getPurchase());
-						player.addCard(house_deck.getDeck().get(cardIndex));
+					if (player.getMoney() >= houseDeck.getDeck().get(cardIndex).getPurchase()){
+						player.addMoney(-houseDeck.getDeck().get(cardIndex).getPurchase());
+						player.addCard(houseDeck.getDeck().get(cardIndex));
 						player.setHouses(player.getHouses()+1);
 						//remove card from deck, set left card at the bottom of the deck:
 						if (this.input.getNumber()==1){
 							//check if the card is place at the bottom of the deck?
-							house_deck.getDeck().add(house_deck.getDeck().get(1));
-							house_deck.getDeck().remove(0);
-							house_deck.getDeck().remove(0);
+							houseDeck.getDeck().add(houseDeck.getDeck().get(1));
+							houseDeck.getDeck().remove(0);
+							houseDeck.getDeck().remove(0);
 						}
 						else{
 							//in case the other card was selected
-							house_deck.getDeck().add(house_deck.getDeck().get(0));
-							house_deck.getDeck().remove(0);
-							house_deck.getDeck().remove(0);
+							houseDeck.getDeck().add(houseDeck.getDeck().get(0));
+							houseDeck.getDeck().remove(0);
+							houseDeck.getDeck().remove(0);
 						}	
 					}
 					else{
-						message("Sorry, you don't have enough money. House costs %d and you only have %d",house_deck.getDeck().get(cardIndex).getPurchase(), player.getMoney());
+						message("Sorry, you don't have enough money. House costs %d and you only have %d",houseDeck.getDeck().get(cardIndex).getPurchase(), player.getMoney());
 					}	
 				}
 			}
@@ -649,21 +414,12 @@ public class Game {
 			}
 		}
 
-		if (chosenPath != 0){
+		if (chosenPath != 0) {
 			this.nextPosition.set(player.getpNum()-1, nextPosition(currentPosition, chosenPath));
 		}
-		
-		else if (!player.isRetired()){
+		else if (!player.isRetired()) {
 			this.nextPosition.set(player.getpNum()-1, nextPosition(currentPosition));
 		}
-		
-		// if (currentPosition.getBlock().getDrawCollegeCareerCard()) {}	
-		// if (currentPosition.getBlock().getPaysBank()) {}
-		// if (currentPosition.getBlock().getUpdatePawn()) {}
-		// if (currentPosition.getBlock().getMarriage()) {}
-		// if (currentPosition.getBlock().getPlayerSpin()) {}
-		// if (currentPosition.getBlock().getRetirement()) {}
-
 	}
 	
 	public Node nextPosition(Node currentPosition, int path){
@@ -678,7 +434,7 @@ public class Game {
   
 	public void moveForward(int totalSteps, Player player) {
 		//added stop flag to break out of nested loops
-		message("------------------------------PLAYER IS MOVING------------------------------");
+		message("----------------------------PLAYER %d (%s) IS MOVING---------------------------------", player.getpNum(), player.getPawn().getCarColor());
 		for(this.playerSteps = 0; (this.playerSteps < totalSteps) && !stopFlag ; this.playerSteps++)  {
 			if (player.getPosition().getBlock().getType().equals("start")) {
 				message("                                                       Player steps: %s", player.getPosition().getData());
@@ -688,9 +444,14 @@ public class Game {
 			message("                                                       Player steps: %s", player.getPosition().getData());
 			message("                                                                -");
 		}
-		message("--------------------------------PLAYER STOPS--------------------------------");
-		message("Press ENTER to go to the next turn");
-		this.input.inputString();
+		// Bonus Number checks ... May need to be moved because can activate after career has been changed but that might be ok also
+		for (int i = 0; i < this.players.size(); i++) {
+			if (this.players.get(i).getBonusNum() == spinner.getValue()) {
+				message("The bonus number on the card of Player%d matches the spinned number %d. They get 20K", i+1, spinner.getValue());
+				this.players.get(i).addMoney(20000);
+			}
+		}
+		message("-------------------------------PLAYER %d (%s) STOPS----------------------------------", player.getpNum(), player.getPawn().getCarColor());
 	}
 	
 	public void nextBlock(Player player, int totalSteps) {
@@ -714,7 +475,7 @@ public class Game {
 		message("Player%d, press enter to spin: ", currentPlayer.getpNum());
 		this.input.inputString();
 		spinner.spin();
-		message("You rolled %d, now moving %d blocks ", spinner.getValue(), spinner.getValue());
+		message("You rolled %d (%s), now moving %d blocks ", spinner.getValue(), spinner.getColor(), spinner.getValue());
 		
 		this.moveForward(spinner.getValue(), currentPlayer);
 	}
@@ -722,6 +483,44 @@ public class Game {
 	public static void message(Object text, Object ... args) {
 		String convertedToString = String.valueOf(text);
 		System.out.printf(convertedToString + "\n", args);
+	}
+
+	public static Player sellHouseCard(Player player, int numberToSell, Input input, Deck houseDeck, Spinner spinner) {	// second parameter determines amount of houses to be sold
+		Card houseToSell;
+		if (!player.isRetired()) {
+			message("Select a house to sell from your deck: ");
+			for (int i = 0; i < player.getCards().size(); i++) {
+				if (player.getCards().get(i).getType() == "house") {
+					message("(%d) for Card: %s", i+1, player.getCards().get(i).getName());
+				}
+			}
+			input.inputNumber();
+			while(player.getCards().get(input.getNumber()-1).getType() != "house"){
+				message("Please select a house card");
+				input.inputNumber();
+			}
+			numberToSell = input.getNumber() - 1;
+		}
+		
+		houseToSell = player.getCards().get(numberToSell);
+		player.getCards().remove(numberToSell);
+		message("Press enter to Spin to determine the selling price of your house");
+		input.inputString();
+		spinner.spin();
+		if (spinner.getColor().equals("red")) {
+			message("House (%s) will be sold for: %d", houseToSell.getName(), houseToSell.getSpinRedPrice());
+			player.addMoney(houseToSell.getSpinRedPrice());
+		}
+		else {
+			message("House (%s) will be sold for: %d", houseToSell.getName(), houseToSell.getSpinBlackPrice());
+			player.addMoney(houseToSell.getSpinBlackPrice());
+		}
+
+		if (!player.isRetired()) {
+			houseDeck.getDeck().add(houseToSell);
+			player.setHouses(player.getHouses()-1);
+		}
+		return player;
 	}
 
 
@@ -733,7 +532,6 @@ public class Game {
 		createPlayers();
 		setPlayersProperties();
 		sortPlayers();
-
 	}
 
 	public void bootup() {
@@ -743,23 +541,20 @@ public class Game {
 	}
 	
 	public void initiate() {
-		this.board = new Board();		// create board
+		this.players = new ArrayList<Player>();
+		this.pawns = new Pawn();
+		this.spinner = new Spinner();
+		this.board = new Board();
 		this.path = board.getPath();
-		this.action_deck = new Deck("action");
-		this.house_deck = new Deck("house");
-		this.career_deck = new Deck("career");
-		this.college_career_deck = new Deck("college_career");
-
-		message("Enter Player Count (2-4 Players): ");
-		this.input.inputNumber();
-
-		while(input.getNumber() < 2 || input.getNumber() > 4) {
-			message("Invalid Player Count! Please Enter Player Count Between 2-4");
-			this.input.inputNumber();
-		}
+		this.actionDeck = new Deck("action");
+		this.houseDeck = new Deck("house");
+		this.careerDeck = new Deck("career");
+		this.collegeCareerDeck = new Deck("college_career");
 	}
 
 	public void createPlayers() {
+		this.input.strictInputNumber(playerNumbers, "Enter Player Count (2-4 Players):");
+
 		while(this.players.size() < this.input.getNumber()) {
 			this.players.add(new Player());
 			nextPosition.add(this.path.getRoot());
@@ -770,23 +565,38 @@ public class Game {
 		for(int i = 0; i < this.players.size(); i++) {
 			this.players.get(i).setPosition(this.path.getRoot());	// Node root = this.path.getRoot();
 			this.players.get(i).setMoney(200000);
-			this.players.get(i).setLoan(0);
+			// this.players.get(i).setLoan(0);
 			this.players.get(i).setStatus(false);
 			message("Player%d: Choose a pawn color: ", i + 1);
 			pawns.printAvailablePawns();
 			this.players.get(i).setPawn(choosePawn());
-			message("Player%d: Press enter to spin and determine your turn order: ", i + 1);
-			this.players.get(i).setTurn(setPlayersTurn());
 	    }	
 	}
 
+	public void sortPlayers() {
+		message("Each player will now spin the spinner. The turns for the players will be sorted accrording to the highest spins!");
+		for(int i = 0; i < this.players.size(); i++) {
+			message("Player%d: Press enter to spin and determine your turn order: ", i + 1);
+			this.players.get(i).setTurn(setPlayersTurn());
+		}
+		Collections.sort(this.players, new Sort());
+
+		message("Here is the turn order: ");
+		for(int i = 0; i < this.players.size(); i++) {
+			message("Turn %d: Player%d", i+1, this.players.get(i).getpNum());
+		}
+	}
+
+	// Pawn properties for each player decided here
 	public Pawn choosePawn() {
 		Pawn pawn = new Pawn();
 		// ask for color
-		this.input.inputString();
+		// this.input.inputString();		// change for easy enter
+		this.input.strictArrInputString(pawn.pawns);	// Update list accordingly
 		pawn.chosenPawn(this.input.getString());
 		message("Choose a gender (male or female): ");
-		this.input.inputString();
+		// this.input.inputString();
+		this.input.strictInputString(genderSelection);
 		pawn.setGender(this.input.getString());
 		return pawn;
 	}
@@ -800,10 +610,6 @@ public class Game {
 
 	public ArrayList<Player> getPlayers() {
 		return this.players;
-	}
-	
-	public void sortPlayers() {
-		Collections.sort(this.players, new Sort());
 	}
 
 	public Tree getPath(){

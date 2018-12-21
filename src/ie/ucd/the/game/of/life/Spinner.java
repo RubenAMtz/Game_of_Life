@@ -3,11 +3,12 @@ package ie.ucd.the.game.of.life;
 import java.util.Random;
 
 public class Spinner {
-	private Random rand = new Random();
+	private Random rand;
 	private int spin;
 	private String color;
 	
-	public Spinner() {	//Constructor
+	public Spinner() {
+		this.rand = new Random();
 		spin();
 	}
 	

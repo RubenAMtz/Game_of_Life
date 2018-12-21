@@ -1,7 +1,5 @@
 package ie.ucd.the.game.of.life;
 
-import java.util.ArrayList;
-
 public class CollegeCareerCard extends Card {
 
     private Integer salary;
@@ -14,7 +12,7 @@ public class CollegeCareerCard extends Card {
         this.salary = salary;
         this.they_pay = they_pay;
 	}
-	
+
 	public Integer getBonus(){
         return this.bonus;
     }

@@ -7,7 +7,7 @@ public class Node {
     public static int cls_id = 0;
     
     private Block block;
-    private ArrayList<Node> nodes = new ArrayList<Node>();;
+    private ArrayList<Node> nodes = new ArrayList<Node>();
     private String type;
     private int id;
 

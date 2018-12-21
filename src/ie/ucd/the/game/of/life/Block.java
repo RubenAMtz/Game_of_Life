@@ -1,9 +1,10 @@
 package ie.ucd.the.game.of.life;
 
+import java.security.InvalidParameterException;
+
 public class Block {
 	
 	private String type;
-	private Block blockAction;
 	private boolean draw_action_card;
 	private boolean draw_house_card;
 	private boolean draw_collegecarrer_card;
@@ -18,6 +19,7 @@ public class Block {
 	private boolean split;
 	private boolean playerSpin;
 	private boolean retirement;
+	private Turn testStop;
 
 	public Block(String type) {
 		setType(type);
@@ -36,18 +38,21 @@ public class Block {
 		this.split = false;
 		this.playerSpin = false;
 		this.retirement = false;
+		this.testStop = null;
 
 		constructBlock(type);
 	}
 	
 	public void constructBlock(String type) {
 		if (type == "start") {
-			// Root block when players havent started
+			// Root block when players haven't started
 			this.stop = true;
 			this.split = true;
+			this.testStop = new Start();
 		}
 		else if (type == "splitns") {
 			// Split night school
+			this.setTestStop(new SplitNS());
 			this.stop = true;
 			this.type_of_stop = "Night School";
 			this.split = true;
@@ -55,29 +60,33 @@ public class Block {
 		}
 		else if (type == "splitfam") {
 			// Split family path
+			this.setTestStop(new SplitFam());
 			this.stop = true;
 			this.type_of_stop = "Family Path";
 			this.split = true;
 		}
 		else if (type == "graduationstop") {
+			this.setTestStop(new Graduation());
 			this.stop = true;
 			this.draw_collegecarrer_card = true;
 		}
 		else if (type == "marriagestop") {
+			this.setTestStop(new Marriage());
 			this.stop = true;
 			this.marriage = true;
 			this.playerSpin = true;
 		}
 		else if (type == "babystop") {
+			this.setTestStop(new Baby());
 			this.stop = true;
 
 		}
 		else if (type == "holidaystop") {
+			this.setTestStop(new Holiday());
 			// Player has to stop and do nothing
 			this.stop = true;
 		}
 		else if (type == "payday") {
-			// System.out.println("\nHit a PAYDAY block\n");
 			// Collect money on card if passed
 			// Collect additional 100k if landed on
 			this.payday = true;
@@ -118,19 +127,18 @@ public class Block {
 				Player spins spinner
 				Depend on number - sell house to banker
 				Return card to deck								
-			*/		
+			*/
 		}
 		else if (type == "retirement") {
+			this.setTestStop(new Retirement());
 			this.stop = true;
 			this.retirement = true;
 		}
-		// else {
-		// 	// This should throw an error
-		// 	System.out.println("Not possible");
-		// }
+		else {
+			// This should throw an error
+			throw new InvalidParameterException("Block type invalid");
+		}
 	}
-
-		// 	this.retirement = false;
 
 	public String getType() {
 		return type;
@@ -194,6 +202,14 @@ public class Block {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public Turn getTestStop() {
+		return testStop;
+	}
+
+	public void setTestStop(Turn testStop) {
+		this.testStop = testStop;
 	}
 
 	public void getProperties() {

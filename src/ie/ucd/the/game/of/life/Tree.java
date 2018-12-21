@@ -1,5 +1,7 @@
 package ie.ucd.the.game.of.life;
 
+import java.security.InvalidParameterException;
+
 import java.util.ArrayList;
 
 public class Tree {
@@ -8,12 +10,10 @@ public class Tree {
     private Node splitNode; // it's a node reference
     private boolean splitFlag;
     private boolean joinFlag;
-    // + added
-    private Node foundNode = null;
-    private ArrayList<ArrayList<Node>> levels = new ArrayList<ArrayList<Node>>();
+
     // private ArrayList<Node> level = new ArrayList<Node>();
     // Constructor
-    public Tree(String data) {	// TODO change to Block from String type
+    public Tree(String data) {
         this.root = new Node(data);
         this.tracker.add(this.root);
 
@@ -34,7 +34,7 @@ public class Tree {
         ArrayList<Node> level = new ArrayList<Node>();
 
         if (branch > 0 && this.splitFlag == false) {
-            //throw java.lang.Exception("You have specified a different branch without splitting the branch first! :O");
+            throw new InvalidParameterException("You have specified a different branch without splitting the branch first!");
         }
 
         if (this.joinFlag) {
@@ -73,8 +73,6 @@ public class Tree {
         for(Node node : this.tracker) {
             level.add(node);
         }
-        
-        this.levels.add(level);
     }
 
     public void split_path(int paths) {
@@ -97,137 +95,5 @@ public class Tree {
     public Node getRoot() {
         return this.root;
     }
-    
-    // new tree
-    // add node
-    // split path
-    // add node first
-    // add node first
-    // add node secondary
-    // join path
-    // add node first
 
-/*
-                        1.- ONLY can split once.
-                        create tree
-                        O
-                       / \              -> addnode("action", first)
-                      O                 -> split_path()  %flag set
-                     / \                -> addNode("normal", first)
-                    O   O               -> addNode("normal", secondary)
-                   /\  /\                -> join_path()   %flag unset
-                  O                 -> addNode("normal", first) %the last two has to reference
-
-*/
-
-    public Node findId(Node node, int id) {
-        Node found = null;
-        return findId(node, id, found);
-    }
-    private Node findId(Node node, int id, Node found) {
-        // if (found != null) {
-        //     return found;
-        // }
-
-        if (node != null) {
-            
-                if (node.getId() == id) {
-                    System.out.println("Found it!");
-                    // this.foundNode = node;
-                    if (found == null) {
-                        System.out.println("null");
-                    }
-                    else {
-                        System.out.println("Im here: " + found.getId());
-                    }
-                    found = node;
-                    return found;
-                }
-                for(Node child : node.getChildren()) {
-                    findId(child, id, found);
-                }
-            
-        }
-        return found;
-    }
-    
-    public Node getFoundNode() {
-        return this.foundNode;
-    }
-
-    public void printTree() {
-        ArrayList<Integer> nodeIds = new ArrayList<Integer>();
-        // ArrayList<ArrayList<Integer>> tree = new ArrayList<ArrayList<Integer>>();
-
-        for (ArrayList<Node> level : this.levels) {
-            for(Node node : level) {
-                if (node != null) {
-                    // if ID of node IS NOT in nodeIds
-                    if (nodeIds.contains(node.getId()) == false) {
-                        // add ID of node to nodeIds
-                        nodeIds.add(node.getId());
-                        // store list of children nodes
-                        ArrayList<Node> children = node.getChildren();
-                        //
-                    }
-                    
-                    
-                }
-            }
-            //System.out.println("");
-        }
-    }
-
-    public void print(Node node) {
-        if (node != null) {
-            // Recursive calls
-            try {
-        	print(node.getNodes(0));
-            }
-            catch(Exception IndexOutOfBoundsException) {
-            	
-            }
-            try {
-            print(node.getNodes(1));
-            }
-            catch(Exception IndexOutOfBoundsException) {
-            	
-            }
-            try {
-            	print(node.getNodes(2));
-            }
-            catch(Exception IndexOutOfBoundsException) {
-            	
-            }
-            // Print data
-            System.out.printf("Type:\n"); 
-            System.out.print(node.getData());
-            System.out.printf(", Id: "); 
-            System.out.print(node.getId());
-            if (node.getNodes(0) != null) {
-                System.out.printf("\nFirst:\n"); 
-                System.out.print( node.getNodes(0).getId() );
-            }
-            try {
-	            if (node.getNodes(1) != null) {
-	                System.out.printf("\nSecond:\n"); 
-	                System.out.print( node.getNodes(1).getId() );
-	            }
-            }
-            catch(Exception IndexOutOfBoundsException) {
-            	
-            }
-            try {
-            	if(node.getNodes(2) != null)  {
-            		System.out.printf("\nThird:\n"); 
-                    System.out.print( node.getNodes(2).getId() );
-            	}
-            }
-            catch(Exception IndexOutOfBoundsException) {
-            	
-            }
-            
-            System.out.printf("\n\n------------\n\n");
-        }
-    }
 }
